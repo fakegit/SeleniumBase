@@ -1,12 +1,18 @@
 from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 
 class NthChildSelectorTests(BaseCase):
-
     def test_locate_rows_with_colors(self):
-        self.open("https://xkcd.com/color/rgb/")
+        self.goto("https://xkcd.com/color/rgb/")
         tbody = "center > table tbody"
-        self.demo_mode = True
+        if self.headed:
+            self.demo_mode = True
+            self.demo_sleep = 0.5
+            self.message_duration = 2.0
+        else:
+            self.demo_mode = False
+            self.message_duration = 0.1
         self.highlight(tbody)
         self.post_message("Part 1: Assert text in given row.")
         self.assert_text("teal", tbody + " tr:nth-child(2)")
@@ -28,5 +34,4 @@ class NthChildSelectorTests(BaseCase):
                 message = '"%s" found on row %s' % (color, row + 1)
                 self.post_message_and_highlight(message, row_selector)
                 return  # Found row and done
-        self.post_error_message(
-            '"%s" could not be found on any row!' % color)
+        self.post_error_message('"%s" could not be found on any row!' % color)

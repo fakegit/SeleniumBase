@@ -1,13 +1,14 @@
 from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 
 class MyChartMakerClass(BaseCase):
-
     def test_multi_series(self):
         self.create_presentation(theme="league")
 
         self.create_line_chart(
-            title="Fruit Sold Last Week", data_name="Apples", unit="Count")
+            title="Fruit Sold Last Week", data_name="Apples", unit="Count"
+        )
         self.add_data_point("Sun", 33)
         self.add_data_point("Mon", 16)
         self.add_data_point("Tue", 19)
@@ -44,4 +45,4 @@ class MyChartMakerClass(BaseCase):
         self.add_data_point("Sat", 31)
 
         self.add_slide("<p>Multi-Series Line Chart</p>" + self.extract_chart())
-        self.begin_presentation(filename="multi_series_chart.html", interval=8)
+        self.begin_presentation(filename="multi_series_chart.html", interval=4)

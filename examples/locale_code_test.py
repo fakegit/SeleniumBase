@@ -1,11 +1,22 @@
 from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 
 class LocaleCodeTests(BaseCase):
-
     def test_locale_code(self):
-        self.open("https://localeplanet.com/support/browser.html")
-        locale_code = self.get_locale_code()
-        expected_text = "navigator.language: %s" % locale_code
-        self.demo_mode = True  # Display test actions
-        self.assert_text(expected_text, "pre")
+        self.goto("about:blank")
+        locale_code = self.get_locale_code()  # navigator.language
+        print("\nYour Browser's Locale Code: %s" % locale_code)
+        if self.browser == "chrome" and not self.headless:
+            self.goto("chrome://settings/languages")
+            language_info = self.get_text(
+                "settings-ui::shadow "
+                "settings-main::shadow "
+                "settings-languages-page-index::shadow "
+                "settings-languages-page::shadow "
+                "settings-section "
+                "#languagesSection div.start div"
+            )
+            print("Language info (chrome://settings/languages):")
+            print(language_info)
+            self.sleep(1)

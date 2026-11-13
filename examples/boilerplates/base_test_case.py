@@ -1,22 +1,17 @@
-'''
-You can use this as a boilerplate for your test framework.
-Define your customized library methods in a master class like this.
-Then have all your test classes inherit it.
-BaseTestCase will inherit SeleniumBase methods from BaseCase.
-With Python 3, simplify "super(...)" to super().setUp() and super().tearDown()
-'''
-
+"""Use this as a boilerplate for your test framework.
+Define customized library methods in a class like this.
+Then have your test classes inherit it.
+BaseTestCase inherits SeleniumBase methods from BaseCase."""
 from seleniumbase import BaseCase
 
 
 class BaseTestCase(BaseCase):
-
     def setUp(self):
-        super(BaseTestCase, self).setUp()
+        super().setUp()
         # <<< Run custom setUp() code for tests AFTER the super().setUp() >>>
 
     def tearDown(self):
-        self.save_teardown_screenshot()
+        self.save_teardown_screenshot()  # If test fails, or if "--screenshot"
         if self.has_exception():
             # <<< Run custom code if the test failed. >>>
             pass
@@ -25,7 +20,7 @@ class BaseTestCase(BaseCase):
             pass
         # (Wrap unreliable tearDown() code in a try/except block.)
         # <<< Run custom tearDown() code BEFORE the super().tearDown() >>>
-        super(BaseTestCase, self).tearDown()
+        super().tearDown()
 
     def login(self):
         # <<< Placeholder. Add your code here. >>>
@@ -38,7 +33,7 @@ class BaseTestCase(BaseCase):
         pass
 
 
-'''
+"""
 # Now you can do something like this in your test files:
 
 from base_test_case import BaseTestCase
@@ -51,4 +46,4 @@ class MyTests(BaseTestCase):
         self.type("input", "Name")
         self.click("form button")
         ...
-'''
+"""

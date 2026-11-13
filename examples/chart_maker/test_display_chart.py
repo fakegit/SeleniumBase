@@ -1,8 +1,8 @@
 from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 
 class MyChartMakerClass(BaseCase):
-
     def test_display_chart(self):
         self.create_pie_chart(title="Pie Chart")
         self.add_data_point("Passed", 7, color="#95d96f")

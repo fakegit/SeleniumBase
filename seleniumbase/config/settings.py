@@ -1,5 +1,5 @@
 """
-You'll probably want to customize this to your own environment and needs.
+Customize these settings based on your own environment as needed.
 
 For changes to take effect immediately, use Python's Develop Mode.
 Develop Mode Install: "pip install -e ."  (from the top-level directory)
@@ -12,9 +12,29 @@ Develop Mode Install: "pip install -e ."  (from the top-level directory)
 # Different methods/actions in base_case.py use different timeouts.
 # If the element to be acted on does not appear in time, the test fails.
 MINI_TIMEOUT = 2
-SMALL_TIMEOUT = 6
+SMALL_TIMEOUT = 7
 LARGE_TIMEOUT = 10
 EXTREME_TIMEOUT = 30
+
+# Default page load timeout.
+# If a page takes longer than this to load, you'll get the following error:
+#     selenium.common.exceptions.TimeoutException:
+#     Message: timeout: Timed out receiving message from renderer: PLT
+# In global Selenium settings, this value is set to 300 seconds by default.
+PAGE_LOAD_TIMEOUT = 120
+
+# Default client-side timeout (in seconds) for each HTTP request that a
+# Remote WebDriver client sends to a Selenium server / Selenium Grid.
+# When set to None, requests have no client-side timeout, which means
+# a WebDriver command can block forever if a grid node dies mid-session.
+# If used, set this higher than PAGE_LOAD_TIMEOUT, and higher than the
+# time a new-session request may wait in your grid's session queue.
+REMOTE_WEBDRIVER_TIMEOUT = None
+
+# Default page load strategy.
+# ["normal", "eager", "none"]
+# Selenium default = "normal"
+PAGE_LOAD_STRATEGY = "normal"
 
 # If True, existing logs from past test runs will be saved and take up space.
 # If False, only the logs from the most recent test run will be saved locally.
@@ -24,6 +44,13 @@ ARCHIVE_EXISTING_LOGS = False
 # If True, existing downloads from past runs will be saved and take up space.
 # If False, only the downloads from the most recent run will be saved locally.
 ARCHIVE_EXISTING_DOWNLOADS = False
+
+# If True, the last page screenshot will include the <body> and background.
+# If False, the last page screenshot will only include the <body> section.
+# Depending on the screen size, including a background could make the <body>
+# appear very small in the screenshot, which may require manually zooming in
+# on the <body> to see page details if you decide to include the background.
+SCREENSHOT_WITH_BACKGROUND = False
 
 # Default names for files saved during test failures.
 # (These files will get saved to the "latest_logs/" folder.)
@@ -38,20 +65,27 @@ REPORT_ARCHIVE_DIR = "archived_reports"
 HTML_REPORT = "report.html"
 RESULTS_TABLE = "results_table.csv"
 
-'''
-This adds wait_for_ready_state_complete() after various browser actions.
-Setting this to True may improve reliability at the cost of speed.
-'''
-# Called after self.open(url) or self.open_url(url), NOT self.driver.open(url)
+"""
+If True, switch to new tabs/windows automatically if a click opens a new one.
+(This switch only happens if the initial tab is still on same URL as before,
+which prevents a situation where a click opens up a new URL in the same tab,
+where a pop-up might open up a new tab on its own, leading to a double open.
+If False, the browser will stay on the current tab where the click happened.
+"""
+SWITCH_TO_NEW_TABS_ON_CLICK = True
+
+"""
+These methods add global waits, such as self.wait_for_ready_state_complete(),
+which waits for document.readyState to be "complete" after browser actions.
+"""
+# Called after self.goto(url), NOT driver.get(url)
 WAIT_FOR_RSC_ON_PAGE_LOADS = True
 # Called after self.click(selector), NOT element.click()
-WAIT_FOR_RSC_ON_CLICKS = True
-
-'''
-This adds wait_for_angularjs() after various browser actions.
-(Requires WAIT_FOR_RSC_ON_PAGE_LOADS and WAIT_FOR_RSC_ON_CLICKS to also be on.)
-'''
+WAIT_FOR_RSC_ON_CLICKS = False
+# Wait for AngularJS calls to complete after various browser actions.
 WAIT_FOR_ANGULARJS = True
+# Skip all calls to wait_for_ready_state_complete() and wait_for_angularjs().
+SKIP_JS_WAITS = False
 
 # Default time to wait after each browser action performed during Demo Mode.
 # Use Demo Mode when you want others to see what your automation is doing.
@@ -84,13 +118,23 @@ DISABLE_CSP_ON_CHROME = False
 # (This applies when using --proxy=[PROXY_STRING] for using a proxy server.)
 RAISE_INVALID_PROXY_STRING_EXCEPTION = True
 
+# Default browser coordinates when opening new windows for tests.
+WINDOW_START_X = 20
+WINDOW_START_Y = 54
+
 # Default browser resolutions when opening new windows for tests.
 # (Headless resolutions take priority, and include all browsers.)
 # (Firefox starts maximized by default when running in GUI Mode.)
-CHROME_START_WIDTH = 1250
+CHROME_START_WIDTH = 1280
 CHROME_START_HEIGHT = 840
 HEADLESS_START_WIDTH = 1440
 HEADLESS_START_HEIGHT = 1880
+
+# If True, hides messages related to downloading drivers.
+# If False, you'll see details about downloading drivers.
+# (This only affects driver downloads coming from tests.)
+# (If calling "sbase get chromedriver", then won't hide.)
+HIDE_DRIVER_DOWNLOADS = False
 
 # #####>>>>>----- MasterQA SETTINGS -----<<<<<#####
 # ##### (Used when importing MasterQA as the parent class)
@@ -134,7 +178,7 @@ DB_SCHEMA = "test_db"
 # Amazon S3 Bucket Credentials
 # (For saving screenshots and other log files from tests)
 # (Bucket names are unique across all existing bucket names in Amazon S3)
-# Usage: "--with-s3_logging"
+# Usage: "--with-s3-logging"
 S3_LOG_BUCKET = "[S3 BUCKET NAME]"
 S3_BUCKET_URL = "https://s3.amazonaws.com/[S3 BUCKET NAME]/"
 S3_SELENIUM_ACCESS_KEY = "[S3 ACCESS KEY]"

@@ -2,26 +2,34 @@
     to modify a Google search into becoming a Bing search.
     set_attribute() -> Modifies the attribute of the first matching element.
     set_attributes() -> Modifies the attribute of all matching elements. """
-
 from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 
 class HackingTests(BaseCase):
-
     def test_hack_search(self):
-        self.open("https://google.com/ncr")
-        self.assert_element('input[title="Search"]')
+        if self.headless or self.browser != "chrome":
+            self.goto_if_not_url("about:blank")
+            self.skip('Skip test if headless or not chrome.')
+        if not self.undetectable:
+            self.get_new_driver(undetectable=True)
+        self.goto("https://google.com/ncr")
+        self.click_if_visible('button:contains("Accept all")')
+        self.hide_elements("iframe")
+        self.assert_element('[name="q"]')
+        self.sleep(0.5)
         self.set_attribute('[action="/search"]', "action", "//bing.com/search")
         self.set_attributes('[value="Google Search"]', "value", "Bing Search")
-        self.type('input[title="Search"]', "SeleniumBase GitHub")
-        self.highlight('[value="Bing Search"]')
-        self.click('[value="Bing Search"]')
-        self.highlight("h1.b_logo")
-        self.highlight_click('a[href*="github.com/seleniumbase/SeleniumBase"]')
-        self.switch_to_newest_window()
-        self.assert_element('[href="/seleniumbase/SeleniumBase"]')
-        self.assert_true("seleniumbase/SeleniumBase" in self.get_current_url())
-        self.click('a[title="examples"]')
-        self.assert_text("examples", "strong.final-path")
-        self.highlight_click('[title="test_hack_search.py"]')
-        self.assert_text("test_hack_search.py", "strong.final-path")
+        self.type('[name="q"]', "SeleniumBase GitHub Page URL")
+        self.sleep(0.5)
+        self.js_click('[value="Bing Search"]')
+        self.highlight("h1.b_logo", loops=8)
+        source = self.get_page_source()
+        self.assert_true("github.com/seleniumbase/SeleniumBase" in source)
+        self.internalize_links()
+        self.click('a:contains("seleniumbase/SeleniumBase")')
+        self.js_click('a[title="examples"]')
+        self.highlight('#repo-content-turbo-frame')
+        self.js_click('a[title="test_hack_search.py"]')
+        self.assert_text("test_hack_search.py", "#file-name-id-wide")
+        self.highlight("#file-name-id-wide")

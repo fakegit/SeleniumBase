@@ -1,81 +1,105 @@
-[<img src="https://seleniumbase.io/cdn/img/sb_logo_b.png" title="SeleniumBase" width="360">](https://github.com/seleniumbase/SeleniumBase/blob/master/README.md)
+<!-- SeleniumBase Docs -->
 
-<h2><img src="https://seleniumbase.io/img/logo6.png" title="SeleniumBase" width="32" /> Installing webdrivers</h2>
+<h2><a href="https://github.com/seleniumbase/SeleniumBase/"><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32"></a> Installing webdrivers</h2>
 
-To run web automation, you'll need webdrivers for each browser you plan on using. Here are some commands that'll automatically download the driver you need into the SeleniumBase ``drivers`` folder once you've installed SeleniumBase:
+To run web automation, you need webdrivers for each browser you plan on using.  With SeleniumBase, drivers are downloaded automatically (as needed) into the SeleniumBase `drivers/` folder.
 
-```bash
-sbase install chromedriver
-sbase install geckodriver
-sbase install edgedriver
-sbase install iedriver
-sbase install operadriver
+🎛️ You can also download drivers manually with these commands:
+
+```zsh
+seleniumbase get chromedriver
+seleniumbase get geckodriver
+seleniumbase get edgedriver
 ```
 
-* If you have the latest version of Chrome installed, get the latest chromedriver (<i>otherwise it defaults to chromedriver 2.44 for compatibility reasons</i>):
+After running the commands above, web drivers will get downloaded into the `seleniumbase/drivers/` folder. SeleniumBase uses those drivers during tests. (The drivers don't come with SeleniumBase by default.)
 
-```bash
-sbase install chromedriver latest
+If the necessary driver is not found in this location while running tests, SeleniumBase will instead look for the driver on the System PATH. If the necessary driver is not on the System PATH either, SeleniumBase will automatically attempt to download the required driver.
+
+🎛️ You can also download specific versions of drivers. Examples:
+
+```zsh
+sbase get chromedriver 114
+sbase get chromedriver 114.0.5735.90
+sbase get chromedriver stable
+sbase get chromedriver beta
+sbase get chromedriver dev
+sbase get chromedriver canary
+sbase get chromedriver previous  # One major version before the stable version
+sbase get chromedriver mlatest  # Milestone latest version for detected browser
+sbase get edgedriver 115.0.1901.183
 ```
 
-* You can also install a specific version of chromedriver for a specific version of Chrome:
+(NOTE: `sbase` is a shortcut for `seleniumbase`)
 
-```bash
-sbase install chromedriver 88.0.4324.96
+--------
 
-sbase install chromedriver 88
-```
+If you plan on using the [Selenium Grid integration](https://github.com/seleniumbase/SeleniumBase/blob/master/seleniumbase/utilities/selenium_grid/ReadMe.md) (which allows for ``remote`` webdriver), you'll need to put the drivers on your System PATH. On macOS and Linux, ``/usr/local/bin`` is a good PATH spot. On Windows, you may need to set the System PATH under Environment Variables to include the location where you placed the driver files. As a shortcut, you could place the driver files into your Python ``Scripts/`` folder in the location where you have Python installed, which should already be on your System PATH.
 
-If you plan on using the [Selenium Grid integration](https://github.com/seleniumbase/SeleniumBase/blob/master/seleniumbase/utilities/selenium_grid/ReadMe.md) (which allows for remote webdriver), you'll need to put the drivers on your System PATH. On macOS and Linux, ``/usr/local/bin`` is a good PATH spot. On Windows, you may need to set the System PATH under Environment Variables to include the location where you placed the driver files. As a shortcut, you could place the driver files into your Python ``Scripts/`` folder in the location where you have Python installed, which should already be on your System PATH.
-
-Here's where you can go to manually install web drivers from the source:
+Here's where you can go to manually get web drivers from the source:
 
 * For Chrome, get [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) on your System PATH.
 
-* For Firefox, get [Geckodriver](https://github.com/mozilla/geckodriver/releases) on your System PATH.
+* For Edge, get [Edge Driver (Microsoft WebDriver)](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/) on your System PATH.
 
-* For Microsoft Edge, get [Edge Driver (Microsoft WebDriver)](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/) on your System PATH.
+* For Firefox, get [Geckodriver](https://github.com/mozilla/geckodriver/releases) on your System PATH.
 
 * For Safari, get [Safari Driver](https://github.com/seleniumbase/SeleniumBase/blob/master/help_docs/using_safari_driver.md) on your System PATH.
 
-* For Opera, get [Opera Chromium Driver](https://github.com/operasoftware/operachromiumdriver/releases) on your System PATH..
-
-* For PhantomJS headless browser automation, get [PhantomJS](http://phantomjs.org/download.html) on your System PATH. (NOTE: <i>PhantomJS is no longer officially supported by SeleniumHQ</i>)
-
 **macOS shortcuts**:
 
-* You can also install drivers by using ``brew`` (aka ``homebrew``), but you'll need to install that first. [Brew installation instructions are here](https://github.com/seleniumbase/SeleniumBase/blob/master/help_docs/install_python_pip_git.md).
+🎛️ You can also install drivers by using ``brew`` (aka ``homebrew``):
 
-```bash
-brew cask install chromedriver
+```zsh
+brew install --cask chromedriver
 
 brew install geckodriver
 ```
 
-You can also upgrade existing webdrivers:
+🎛️ You can also upgrade existing webdrivers:
 
-```bash
-brew cask upgrade chromedriver
+```zsh
+brew upgrade --cask chromedriver
 
 brew upgrade geckodriver
 ```
 
 **Linux shortcuts**:
 
-If you still need the web drivers, here are some scripts to help you install chromedriver and geckodriver on a Linux machine:
+🎛️ If you still need drivers, these scripts download `chromedriver` and `geckodriver` to a Linux machine:
 
-```bash
-wget http://chromedriver.storage.googleapis.com/2.44/chromedriver_linux64.zip
+```zsh
+wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
 unzip chromedriver_linux64.zip
 mv chromedriver /usr/local/bin/
 chmod +x /usr/local/bin/chromedriver
 ```
 
-```bash
-wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
-tar xvfz geckodriver-v0.26.0-linux64.tar.gz
+```zsh
+wget https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux64.tar.gz
+tar xvfz geckodriver-v0.35.0-linux64.tar.gz
 mv geckodriver /usr/local/bin/
 chmod +x /usr/local/bin/geckodriver
 ```
 
-* If you wish to verify that web drivers are working, **[follow these instructions](https://github.com/seleniumbase/SeleniumBase/blob/master/help_docs/verify_webdriver.md)**.
+To verify that web drivers are working, **[follow these instructions](https://github.com/seleniumbase/SeleniumBase/blob/master/help_docs/verify_webdriver.md)**.
+
+--------
+
+**Browser Binaries**:
+
+🎛️ Use the `sbase get` command to download the `Chrome for Testing` and `Chrome-Headless-Shell` browser binaries. Example:
+
+```zsh
+sbase get cft  # (For `Chrome for Testing`)
+sbase get chs  # (For `Chrome-Headless-Shell`)
+```
+
+Those commands download those binaries into the `seleniumbase/drivers` folder.
+To use the binaries from there in SeleniumBase scripts, set the `binary_location` to `cft` or `chs`.
+
+(Source: https://googlechromelabs.github.io/chrome-for-testing/)
+
+--------
+
+<a href="https://github.com/seleniumbase/SeleniumBase/"><img src="https://seleniumbase.github.io/cdn/img/sb_logo_b.png" title="SeleniumBase" width="280"></a>

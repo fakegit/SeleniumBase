@@ -1,12 +1,11 @@
-# Spanish / Español - Translations - Python 3 Only!
+# Spanish / Español - Translations
 from seleniumbase import BaseCase
 from seleniumbase import MasterQA
 
 
 class CasoDePrueba(BaseCase):
-
     def __init__(self, *args, **kwargs):
-        super(CasoDePrueba, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._language = "Spanish"
 
     def abrir(self, *args, **kwargs):
@@ -25,17 +24,30 @@ class CasoDePrueba(BaseCase):
         # double_click(selector)
         return self.double_click(*args, **kwargs)
 
+    def clic_de_contexto(self, *args, **kwargs):
+        # context_click(selector)
+        return self.context_click(*args, **kwargs)
+
     def clic_lentamente(self, *args, **kwargs):
         # slow_click(selector)
         return self.slow_click(*args, **kwargs)
 
-    def clic_si_está_muestra(self, *args, **kwargs):  # noqa
+    def clic_si_está_muestra(self, *args, **kwargs):
         # click_if_visible(selector, by=By.CSS_SELECTOR)
         return self.click_if_visible(*args, **kwargs)
+
+    def js_clic_si_está_presente(self, *args, **kwargs):
+        # js_click_if_present(selector, by=By.CSS_SELECTOR)
+        return self.js_click_if_present(*args, **kwargs)
 
     def clic_texto_del_enlace(self, *args, **kwargs):
         # click_link_text(link_text)
         return self.click_link_text(*args, **kwargs)
+
+    def clic_con_desplazamiento(self, *args, **kwargs):
+        # click_with_offset(selector, x, y, by=By.CSS_SELECTOR,
+        #                   mark=None, timeout=None, center=None)
+        return self.click_with_offset(*args, **kwargs)
 
     def actualizar_texto(self, *args, **kwargs):
         # update_text(selector, text)
@@ -65,6 +77,14 @@ class CasoDePrueba(BaseCase):
         # assert_link_text(link_text)
         return self.assert_link_text(*args, **kwargs)
 
+    def verificar_texto_no_vacío(self, *args, **kwargs):
+        # assert_non_empty_text(selector)
+        return self.assert_non_empty_text(*args, **kwargs)
+
+    def verificar_texto_no_se_muestra(self, *args, **kwargs):
+        # assert_text_not_visible(text, selector)
+        return self.assert_text_not_visible(*args, **kwargs)
+
     def verificar_elemento(self, *args, **kwargs):
         # assert_element(selector)
         return self.assert_element(*args, **kwargs)
@@ -85,9 +105,25 @@ class CasoDePrueba(BaseCase):
         # assert_element_absent(selector)
         return self.assert_element_absent(*args, **kwargs)
 
+    def verificar_atributo(self, *args, **kwargs):
+        # assert_attribute(selector, attribute, value)
+        return self.assert_attribute(*args, **kwargs)
+
+    def verificar_url(self, *args, **kwargs):
+        # assert_url(url)
+        return self.assert_url(*args, **kwargs)
+
+    def verificar_url_contiene(self, *args, **kwargs):
+        # assert_url_contains(substring)
+        return self.assert_url_contains(*args, **kwargs)
+
     def verificar_título(self, *args, **kwargs):
         # assert_title(title)
         return self.assert_title(*args, **kwargs)
+
+    def verificar_título_contiene(self, *args, **kwargs):
+        # assert_title_contains(substring)
+        return self.assert_title_contains(*args, **kwargs)
 
     def obtener_título(self, *args, **kwargs):
         # get_title()
@@ -133,6 +169,10 @@ class CasoDePrueba(BaseCase):
         # is_text_visible(text, selector="html")
         return self.is_text_visible(*args, **kwargs)
 
+    def se_muestra_el_texto_exacto(self, *args, **kwargs):
+        # is_exact_text_visible(text, selector="html")
+        return self.is_exact_text_visible(*args, **kwargs)
+
     def se_muestra_el_elemento(self, *args, **kwargs):
         # is_element_visible(selector)
         return self.is_element_visible(*args, **kwargs)
@@ -169,6 +209,14 @@ class CasoDePrueba(BaseCase):
         # wait_for_element_absent(selector)
         return self.wait_for_element_absent(*args, **kwargs)
 
+    def espera_el_atributo(self, *args, **kwargs):
+        # wait_for_attribute(selector, attribute, value)
+        return self.wait_for_attribute(*args, **kwargs)
+
+    def esperar_a_que_cargue_la_página(self, *args, **kwargs):
+        # wait_for_ready_state_complete()
+        return self.wait_for_ready_state_complete(*args, **kwargs)
+
     def dormir(self, *args, **kwargs):
         # sleep(seconds)
         return self.sleep(*args, **kwargs)
@@ -201,6 +249,18 @@ class CasoDePrueba(BaseCase):
         # js_type(selector, text)
         return self.js_type(*args, **kwargs)
 
+    def jquery_haga_clic(self, *args, **kwargs):
+        # jquery_click(selector)
+        return self.jquery_click(*args, **kwargs)
+
+    def jquery_actualizar_texto(self, *args, **kwargs):
+        # jquery_update_text(selector, text)
+        return self.jquery_update_text(*args, **kwargs)
+
+    def jquery_escriba(self, *args, **kwargs):
+        # jquery_type(selector, text)
+        return self.jquery_type(*args, **kwargs)
+
     def comprobar_html(self, *args, **kwargs):
         # inspect_html()
         return self.inspect_html(*args, **kwargs)
@@ -208,6 +268,10 @@ class CasoDePrueba(BaseCase):
     def guardar_captura_de_pantalla(self, *args, **kwargs):
         # save_screenshot(name)
         return self.save_screenshot(*args, **kwargs)
+
+    def guardar_captura_de_pantalla_para_logs(self, *args, **kwargs):
+        # save_screenshot_to_logs(name)
+        return self.save_screenshot_to_logs(*args, **kwargs)
 
     def seleccionar_archivo(self, *args, **kwargs):
         # choose_file(selector, file_path)
@@ -224,6 +288,14 @@ class CasoDePrueba(BaseCase):
     def activar_jquery(self, *args, **kwargs):
         # activate_jquery()
         return self.activate_jquery(*args, **kwargs)
+
+    def activar_recorder(self, *args, **kwargs):
+        # activate_recorder()
+        return self.activate_recorder(*args, **kwargs)
+
+    def abrir_que_no_url(self, *args, **kwargs):
+        # open_if_not_url(url)
+        return self.open_if_not_url(*args, **kwargs)
 
     def bloquear_anuncios(self, *args, **kwargs):
         # ad_block()
@@ -248,6 +320,10 @@ class CasoDePrueba(BaseCase):
     def cambiar_al_contenido_predeterminado(self, *args, **kwargs):
         # switch_to_default_content()
         return self.switch_to_default_content(*args, **kwargs)
+
+    def cambiar_al_marco_principal(self, *args, **kwargs):
+        # switch_to_parent_frame()
+        return self.switch_to_parent_frame(*args, **kwargs)
 
     def abrir_una_nueva_ventana(self, *args, **kwargs):
         # open_new_window()
@@ -292,6 +368,10 @@ class CasoDePrueba(BaseCase):
     def pasar_el_ratón_y_hacer_clic(self, *args, **kwargs):
         # hover_and_click(hover_selector, click_selector)
         return self.hover_and_click(*args, **kwargs)
+
+    def pasar_el_ratón(self, *args, **kwargs):
+        # hover(selector)
+        return self.hover(*args, **kwargs)
 
     def está_seleccionado(self, *args, **kwargs):
         # is_selected(selector)
@@ -440,9 +520,25 @@ class CasoDePrueba(BaseCase):
         #                 codec='utf-8', wrap=True, nav=False, override=False)
         return self.assert_pdf_text(*args, **kwargs)
 
+    def descargar_archivo(self, *args, **kwargs):
+        # download_file(file)
+        return self.download_file(*args, **kwargs)
+
+    def está_presente_el_archivo_descargado(self, *args, **kwargs):
+        # is_downloaded_file_present(file)
+        return self.is_downloaded_file_present(*args, **kwargs)
+
+    def obtener_ruta_del_archivo_descargado(self, *args, **kwargs):
+        # get_path_of_downloaded_file(file)
+        return self.get_path_of_downloaded_file(*args, **kwargs)
+
     def verificar_archivo_descargado(self, *args, **kwargs):
         # assert_downloaded_file(file)
         return self.assert_downloaded_file(*args, **kwargs)
+
+    def eliminar_archivo_descargado(self, *args, **kwargs):
+        # delete_downloaded_file(file)
+        return self.delete_downloaded_file(*args, **kwargs)
 
     def fallar(self, *args, **kwargs):
         # fail(msg=None)  # Inherited from "unittest"
@@ -566,7 +662,6 @@ class CasoDePrueba(BaseCase):
 
 
 class MasterQA_Español(MasterQA, CasoDePrueba):
-
     def verificar(self, *args, **kwargs):
         # "Manual Check"
         self.DEFAULT_VALIDATION_TITLE = "Comprobación manual"

@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-''' Small Dictionary '''
+"""Small Dictionary for Demo Mode translations"""
 
 
 class SD:
-
     def translate_in(language):
         words = {}
         words["English"] = "in"
@@ -40,7 +38,7 @@ class SD:
         words["French"] = "VÉRIFIER TEXTE"
         words["Italian"] = "VERIFICARE TESTO"
         words["Japanese"] = "テキストを確認する"
-        words["Korean"] = "텍스트 확인"
+        words["Korean"] = "텍스트 확인하는"
         words["Portuguese"] = "VERIFICAR TEXTO"
         words["Russian"] = "ПОДТВЕРДИТЬ ТЕКСТ"
         words["Spanish"] = "VERIFICAR TEXTO"
@@ -74,6 +72,34 @@ class SD:
         words["Spanish"] = "VERIFICAR TEXTO DEL ENLACE"
         return words[language]
 
+    def translate_assert_non_empty_text(language):
+        words = {}
+        words["English"] = "ASSERT NON-EMPTY TEXT"
+        words["Chinese"] = "断言非空文本"
+        words["Dutch"] = "CONTROLEREN NIET-LEGE TEKST"
+        words["French"] = "VÉRIFIER TEXTE NON VIDE"
+        words["Italian"] = "VERIFICARE TESTO NON VUOTO"
+        words["Japanese"] = "空ではないテキストを確認する"
+        words["Korean"] = "비어 있지 않은 텍스트 확인하는"
+        words["Portuguese"] = "VERIFICAR TEXTO NÃO VAZIO"
+        words["Russian"] = "ПОДТВЕРДИТЬ НЕПУСТОЙ ТЕКСТ"
+        words["Spanish"] = "VERIFICAR TEXTO NO VACÍO"
+        return words[language]
+
+    def translate_assert_attribute(language):
+        words = {}
+        words["English"] = "ASSERT ATTRIBUTE"
+        words["Chinese"] = "断言属性"
+        words["Dutch"] = "CONTROLEREN ATTRIBUUT"
+        words["French"] = "VÉRIFIER ATTRIBUT"
+        words["Italian"] = "VERIFICARE ATTRIBUTO"
+        words["Japanese"] = "属性を確認する"
+        words["Korean"] = "특성 확인"
+        words["Portuguese"] = "VERIFICAR ATRIBUTO"
+        words["Russian"] = "ПОДТВЕРДИТЬ АТРИБУТ"
+        words["Spanish"] = "VERIFICAR ATRIBUTO"
+        return words[language]
+
     def translate_assert_title(language):
         words = {}
         words["English"] = "ASSERT TITLE"
@@ -88,18 +114,60 @@ class SD:
         words["Spanish"] = "VERIFICAR TÍTULO"
         return words[language]
 
+    def translate_assert_title_contains(language):
+        words = {}
+        words["English"] = "ASSERT TITLE CONTAINS"
+        words["Chinese"] = "断言标题包含"
+        words["Dutch"] = "CONTROLEREN TITEL BEVAT"
+        words["French"] = "VÉRIFIER TITRE CONTIENT"
+        words["Italian"] = "VERIFICARE TITOLO CONTIENE"
+        words["Japanese"] = "タイトル部分文字列を確認する"
+        words["Korean"] = "제목 부분 확인"
+        words["Portuguese"] = "VERIFICAR TÍTULO CONTÉM"
+        words["Russian"] = "ПОДТВЕРДИТЬ НАЗВАНИЕ СОДЕРЖИТ"
+        words["Spanish"] = "VERIFICAR TÍTULO CONTIENE"
+        return words[language]
+
+    def translate_assert_url(language):
+        words = {}
+        words["English"] = "ASSERT URL"
+        words["Chinese"] = "断言 URL"
+        words["Dutch"] = "CONTROLEREN URL"
+        words["French"] = "VÉRIFIER URL"
+        words["Italian"] = "VERIFICARE URL"
+        words["Japanese"] = "URL を確認する"
+        words["Korean"] = "URL 확인"
+        words["Portuguese"] = "VERIFICAR URL"
+        words["Russian"] = "ПОДТВЕРДИТЬ URL"
+        words["Spanish"] = "VERIFICAR URL"
+        return words[language]
+
+    def translate_assert_url_contains(language):
+        words = {}
+        words["English"] = "ASSERT URL CONTAINS"
+        words["Chinese"] = "断言 URL 包含"
+        words["Dutch"] = "CONTROLEREN URL BEVAT"
+        words["French"] = "VÉRIFIER URL CONTIENT"
+        words["Italian"] = "VERIFICARE URL CONTIENE"
+        words["Japanese"] = "URL を確認する"
+        words["Korean"] = "URL 확인"
+        words["Portuguese"] = "VERIFICAR URL CONTÉM"
+        words["Russian"] = "ПОДТВЕРДИТЬ URL СОДЕРЖИТ"
+        words["Spanish"] = "VERIFICAR URL CONTIENE"
+        return words[language]
+
     def translate_assert_no_404_errors(language):
         words = {}
         words["English"] = "ASSERT NO 404 ERRORS"
         words["Chinese"] = "检查断开的链接"
-        words["Dutch"] = "CONTROLEREN OP GEBROKEN LINKS"
-        words["French"] = "VÉRIFIER LES LIENS ROMPUS"
-        words["Italian"] = "VERIFICARE I COLLEGAMENTI"
+        words["Dutch"] = "CONTROLEREN OP 404 FOUTEN"
+        words["French"] = "AFFIRMEZ PAS D'ERREURS 404"
+        words["Italian"] = "CONTROLLA ERRORI 404"
         words["Japanese"] = "リンク切れを確認する"
         words["Korean"] = "끊어진 링크 확인"
-        words["Portuguese"] = "VERIFICAR SE HÁ LINKS QUEBRADOS"
+        words["Portuguese"] = "VERIFICAR SE HÁ ERROS 404"
         words["Russian"] = "ПРОВЕРИТЬ ОШИБКИ 404"
-        words["Spanish"] = "VERIFICAR SI HAY ENLACES ROTOS"
+        words["Spanish"] = "VERIFICAR SI HAY ERRORES 404"
         return words[language]
 
     def translate_assert_no_js_errors(language):
@@ -107,7 +175,7 @@ class SD:
         words["English"] = "ASSERT NO JS ERRORS"
         words["Chinese"] = "检查JS错误"
         words["Dutch"] = "CONTROLEREN OP JS FOUTEN"
-        words["French"] = "VÉRIFIER LES ERREURS JS"
+        words["French"] = "AFFIRMEZ PAS D'ERREURS JS"
         words["Italian"] = "CONTROLLA ERRORI JS"
         words["Japanese"] = "JSエラーを確認する"
         words["Korean"] = "JS 오류 확인"

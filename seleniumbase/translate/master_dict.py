@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Master Dictionary
 
@@ -74,8 +73,10 @@ class MD_F:
         parent_class_lang["ТестНаСелен"] = "Russian"
         parent_class_lang["CasoDePrueba"] = "Spanish"
         if parent_class not in parent_class_lang.keys():
-            raise Exception("Invalid parent_class {%s} not in {%s}!"
-                            "" % (parent_class, parent_class_lang.keys()))
+            raise Exception(
+                "Invalid parent_class {%s} not in {%s}!"
+                % (parent_class, parent_class_lang.keys())
+            )
         return parent_class_lang[parent_class]
 
     def get_mqa_par_class_lang(parent_class):
@@ -91,8 +92,10 @@ class MD_F:
         parent_class_lang["MasterQA_Русский"] = "Russian"
         parent_class_lang["MasterQA_Español"] = "Spanish"
         if parent_class not in parent_class_lang.keys():
-            raise Exception("Invalid parent_class {%s} not in {%s}!"
-                            "" % (parent_class, parent_class_lang.keys()))
+            raise Exception(
+                "Invalid parent_class {%s} not in {%s}!"
+                % (parent_class, parent_class_lang.keys())
+            )
         return parent_class_lang[parent_class]
 
     def get_lang_parent_class(language):
@@ -108,8 +111,10 @@ class MD_F:
         lang_parent_class["Russian"] = "ТестНаСелен"
         lang_parent_class["Spanish"] = "CasoDePrueba"
         if language not in lang_parent_class.keys():
-            raise Exception("Invalid language {%s} not in {%s}!"
-                            "" % (language, lang_parent_class.keys()))
+            raise Exception(
+                "Invalid language {%s} not in {%s}!"
+                % (language, lang_parent_class.keys())
+            )
         return lang_parent_class[language]
 
     def get_mqa_lang_par_class(language):
@@ -125,66 +130,88 @@ class MD_F:
         lang_parent_class["Russian"] = "MasterQA_Русский"
         lang_parent_class["Spanish"] = "MasterQA_Español"
         if language not in lang_parent_class.keys():
-            raise Exception("Invalid language {%s} not in {%s}!"
-                            "" % (language, lang_parent_class.keys()))
+            raise Exception(
+                "Invalid language {%s} not in {%s}!"
+                % (language, lang_parent_class.keys())
+            )
         return lang_parent_class[language]
 
     def get_import_line(language):
         import_line = {}
         # - The Default Import Line:
-        import_line["English"] = (
-            "from seleniumbase import BaseCase")
+        import_line["English"] = "from seleniumbase import BaseCase"
         # - Translated Import Lines:
-        import_line["Chinese"] = (
-            "from seleniumbase.translate.chinese import 硒测试用例")
-        import_line["Dutch"] = (
-            "from seleniumbase.translate.dutch import Testgeval")
-        import_line["French"] = (
-            "from seleniumbase.translate.french import CasDeBase")
-        import_line["Italian"] = (
-            "from seleniumbase.translate.italian import CasoDiProva")
-        import_line["Japanese"] = (
-            "from seleniumbase.translate.japanese import セレニウムテストケース")
-        import_line["Korean"] = (
-            "from seleniumbase.translate.korean import 셀레늄_테스트_케이스")
-        import_line["Portuguese"] = (
-            "from seleniumbase.translate.portuguese import CasoDeTeste")
-        import_line["Russian"] = (
-            "from seleniumbase.translate.russian import ТестНаСелен")
-        import_line["Spanish"] = (
-            "from seleniumbase.translate.spanish import CasoDePrueba")
+        import_line[
+            "Chinese"
+        ] = "from seleniumbase.translate.chinese import 硒测试用例"
+        import_line[
+            "Dutch"
+        ] = "from seleniumbase.translate.dutch import Testgeval"
+        import_line[
+            "French"
+        ] = "from seleniumbase.translate.french import CasDeBase"
+        import_line[
+            "Italian"
+        ] = "from seleniumbase.translate.italian import CasoDiProva"
+        import_line[
+            "Japanese"
+        ] = "from seleniumbase.translate.japanese import セレニウムテストケース"
+        import_line[
+            "Korean"
+        ] = "from seleniumbase.translate.korean import 셀레늄_테스트_케이스"
+        import_line[
+            "Portuguese"
+        ] = "from seleniumbase.translate.portuguese import CasoDeTeste"
+        import_line[
+            "Russian"
+        ] = "from seleniumbase.translate.russian import ТестНаСелен"
+        import_line[
+            "Spanish"
+        ] = "from seleniumbase.translate.spanish import CasoDePrueba"
         if language not in import_line.keys():
-            raise Exception("Invalid language {%s} not in {%s}!"
-                            "" % (language, import_line.keys()))
+            raise Exception(
+                "Invalid language {%s} not in {%s}!"
+                % (language, import_line.keys())
+            )
         return import_line[language]
 
     def get_mqa_im_line(language):
         import_line = {}
         # - The Default Import Line:
-        import_line["English"] = (
-            "from seleniumbase import MasterQA")
+        import_line["English"] = "from seleniumbase import MasterQA"
         # - Translated Import Lines:
-        import_line["Chinese"] = (
-            "from seleniumbase.translate.chinese import MasterQA_中文")
-        import_line["Dutch"] = (
-            "from seleniumbase.translate.dutch import MasterQA_Nederlands")
-        import_line["French"] = (
-            "from seleniumbase.translate.french import MasterQA_Français")
-        import_line["Italian"] = (
-            "from seleniumbase.translate.italian import MasterQA_Italiano")
-        import_line["Japanese"] = (
-            "from seleniumbase.translate.japanese import MasterQA_日本語")
-        import_line["Korean"] = (
-            "from seleniumbase.translate.korean import MasterQA_한국어")
-        import_line["Portuguese"] = (
-            "from seleniumbase.translate.portuguese import MasterQA_Português")
-        import_line["Russian"] = (
-            "from seleniumbase.translate.russian import MasterQA_Русский")
-        import_line["Spanish"] = (
-            "from seleniumbase.translate.spanish import MasterQA_Español")
+        import_line[
+            "Chinese"
+        ] = "from seleniumbase.translate.chinese import MasterQA_中文"
+        import_line[
+            "Dutch"
+        ] = "from seleniumbase.translate.dutch import MasterQA_Nederlands"
+        import_line[
+            "French"
+        ] = "from seleniumbase.translate.french import MasterQA_Français"
+        import_line[
+            "Italian"
+        ] = "from seleniumbase.translate.italian import MasterQA_Italiano"
+        import_line[
+            "Japanese"
+        ] = "from seleniumbase.translate.japanese import MasterQA_日本語"
+        import_line[
+            "Korean"
+        ] = "from seleniumbase.translate.korean import MasterQA_한국어"
+        import_line[
+            "Portuguese"
+        ] = "from seleniumbase.translate.portuguese import MasterQA_Português"
+        import_line[
+            "Russian"
+        ] = "from seleniumbase.translate.russian import MasterQA_Русский"
+        import_line[
+            "Spanish"
+        ] = "from seleniumbase.translate.spanish import MasterQA_Español"
         if language not in import_line.keys():
-            raise Exception("Invalid language {%s} not in {%s}!"
-                            "" % (language, import_line.keys()))
+            raise Exception(
+                "Invalid language {%s} not in {%s}!"
+                % (language, import_line.keys())
+            )
         return import_line[language]
 
     def get_locale_code(language):
@@ -200,8 +227,10 @@ class MD_F:
         locale_codes["Russian"] = "ru"
         locale_codes["Spanish"] = "es"
         if language not in locale_codes.keys():
-            raise Exception("Invalid language {%s} not in {%s}!"
-                            "" % (language, locale_codes.keys()))
+            raise Exception(
+                "Invalid language {%s} not in {%s}!"
+                % (language, locale_codes.keys())
+            )
         return locale_codes[language]
 
     def get_locale_list():
@@ -287,6 +316,18 @@ class MD:
     md["double_click"][8] = "дважды_нажмите"
     md["double_click"][9] = "doble_clic"
 
+    md["context_click"] = ["*"] * num_langs
+    md["context_click"][0] = "context_click"
+    md["context_click"][1] = "上下文点击"
+    md["context_click"][2] = "contextklik"
+    md["context_click"][3] = "contextuel_cliquer"
+    md["context_click"][4] = "clic_contestuale"
+    md["context_click"][5] = "コンテキストクリック"
+    md["context_click"][6] = "컨텍스트_클릭"
+    md["context_click"][7] = "clique_de_contexto"
+    md["context_click"][8] = "контекстный_щелчок"
+    md["context_click"][9] = "clic_de_contexto"
+
     md["slow_click"] = ["*"] * num_langs
     md["slow_click"][0] = "slow_click"
     md["slow_click"][1] = "慢单击"
@@ -311,6 +352,18 @@ class MD:
     md["click_if_visible"][8] = "нажмите_если_виден"
     md["click_if_visible"][9] = "clic_si_está_muestra"
 
+    md["js_click_if_present"] = ["*"] * num_langs
+    md["js_click_if_present"][0] = "js_click_if_present"
+    md["js_click_if_present"][1] = "JS如果存在请单击"
+    md["js_click_if_present"][2] = "js_klik_indien_aanwezig"
+    md["js_click_if_present"][3] = "js_cliquer_si_présent"
+    md["js_click_if_present"][4] = "js_clic_se_presente"
+    md["js_click_if_present"][5] = "存在する場合はJSクリック"
+    md["js_click_if_present"][6] = "JS_존재하는지_경우_클릭"
+    md["js_click_if_present"][7] = "js_clique_se_está_presente"
+    md["js_click_if_present"][8] = "JS_нажмите_если_присутствует"
+    md["js_click_if_present"][9] = "js_clic_si_está_presente"
+
     md["click_link"] = ["*"] * num_langs
     md["click_link"][0] = "click_link"
     md["click_link"][1] = "单击链接文本"
@@ -322,6 +375,18 @@ class MD:
     md["click_link"][7] = "clique_texto_do_link"
     md["click_link"][8] = "нажмите_ссылку"
     md["click_link"][9] = "clic_texto_del_enlace"
+
+    md["click_with_offset"] = ["*"] * num_langs
+    md["click_with_offset"][0] = "click_with_offset"
+    md["click_with_offset"][1] = "鼠标点击偏移"
+    md["click_with_offset"][2] = "klik_op_locatie"
+    md["click_with_offset"][3] = "cliquer_emplacement"
+    md["click_with_offset"][4] = "clic_su_posizione"
+    md["click_with_offset"][5] = "オフセットでクリック"
+    md["click_with_offset"][6] = "위치를_클릭"
+    md["click_with_offset"][7] = "clique_com_deslocamento"
+    md["click_with_offset"][8] = "нажмите_на_местоположение"
+    md["click_with_offset"][9] = "clic_con_desplazamiento"
 
     md["update_text"] = ["*"] * num_langs
     md["update_text"][0] = "update_text"
@@ -395,6 +460,30 @@ class MD:
     md["assert_link_text"][8] = "подтвердить_ссылку"
     md["assert_link_text"][9] = "verificar_texto_del_enlace"
 
+    md["assert_non_empty_text"] = ["*"] * num_langs
+    md["assert_non_empty_text"][0] = "assert_non_empty_text"
+    md["assert_non_empty_text"][1] = "断言非空文本"
+    md["assert_non_empty_text"][2] = "controleren_niet_lege_tekst"
+    md["assert_non_empty_text"][3] = "vérifier_texte_non_vide"
+    md["assert_non_empty_text"][4] = "verificare_testo_non_vuoto"
+    md["assert_non_empty_text"][5] = "空ではないテキストを確認する"
+    md["assert_non_empty_text"][6] = "비어_있지_않은_텍스트_확인하는"
+    md["assert_non_empty_text"][7] = "verificar_texto_não_vazio"
+    md["assert_non_empty_text"][8] = "подтвердить_непустой_текст"
+    md["assert_non_empty_text"][9] = "verificar_texto_no_vacío"
+
+    md["assert_text_not_visible"] = ["*"] * num_langs
+    md["assert_text_not_visible"][0] = "assert_text_not_visible"
+    md["assert_text_not_visible"][1] = "断言文本不可见"
+    md["assert_text_not_visible"][2] = "controleren_tekst_niet_zichtbaar"
+    md["assert_text_not_visible"][3] = "vérifier_texte_pas_affiché"
+    md["assert_text_not_visible"][4] = "verificare_testo_non_visto"
+    md["assert_text_not_visible"][5] = "テキが表示されていないことを確認します"
+    md["assert_text_not_visible"][6] = "텍스트_보이지_않는지_확인"
+    md["assert_text_not_visible"][7] = "verificar_texto_não_visível"
+    md["assert_text_not_visible"][8] = "подтвердить_текст_не_виден"
+    md["assert_text_not_visible"][9] = "verificar_texto_no_se_muestra"
+
     md["assert_element"] = ["*"] * num_langs
     md["assert_element"][0] = "assert_element"
     md["assert_element"][1] = "断言元素"
@@ -455,6 +544,42 @@ class MD:
     md["assert_element_absent"][8] = "подтвердить_элемент_отсутствует"
     md["assert_element_absent"][9] = "verificar_elemento_ausente"
 
+    md["assert_attribute"] = ["*"] * num_langs
+    md["assert_attribute"][0] = "assert_attribute"
+    md["assert_attribute"][1] = "断言属性"
+    md["assert_attribute"][2] = "controleren_attribuut"
+    md["assert_attribute"][3] = "vérifier_attribut"
+    md["assert_attribute"][4] = "verificare_attributo"
+    md["assert_attribute"][5] = "属性を確認する"
+    md["assert_attribute"][6] = "특성_확인"
+    md["assert_attribute"][7] = "verificar_atributo"
+    md["assert_attribute"][8] = "подтвердить_атрибут"
+    md["assert_attribute"][9] = "verificar_atributo"
+
+    md["assert_url"] = ["*"] * num_langs
+    md["assert_url"][0] = "assert_url"
+    md["assert_url"][1] = "断言URL"
+    md["assert_url"][2] = "controleren_url"
+    md["assert_url"][3] = "vérifier_url"
+    md["assert_url"][4] = "verificare_url"
+    md["assert_url"][5] = "URLを確認する"
+    md["assert_url"][6] = "URL_확인"
+    md["assert_url"][7] = "verificar_url"
+    md["assert_url"][8] = "подтвердить_URL"
+    md["assert_url"][9] = "verificar_url"
+
+    md["assert_url_contains"] = ["*"] * num_langs
+    md["assert_url_contains"][0] = "assert_url_contains"
+    md["assert_url_contains"][1] = "断言URL包含"
+    md["assert_url_contains"][2] = "controleren_url_bevat"
+    md["assert_url_contains"][3] = "vérifier_url_contient"
+    md["assert_url_contains"][4] = "verificare_url_contiene"
+    md["assert_url_contains"][5] = "URL部分文字列を確認する"
+    md["assert_url_contains"][6] = "URL_부분_확인"
+    md["assert_url_contains"][7] = "verificar_url_contém"
+    md["assert_url_contains"][8] = "подтвердить_URL_содержит"
+    md["assert_url_contains"][9] = "verificar_url_contiene"
+
     md["assert_title"] = ["*"] * num_langs
     md["assert_title"][0] = "assert_title"
     md["assert_title"][1] = "断言标题"
@@ -466,6 +591,18 @@ class MD:
     md["assert_title"][7] = "verificar_título"
     md["assert_title"][8] = "подтвердить_название"
     md["assert_title"][9] = "verificar_título"
+
+    md["assert_title_contains"] = ["*"] * num_langs
+    md["assert_title_contains"][0] = "assert_title_contains"
+    md["assert_title_contains"][1] = "断言标题包含"
+    md["assert_title_contains"][2] = "controleren_titel_bevat"
+    md["assert_title_contains"][3] = "vérifier_titre_contient"
+    md["assert_title_contains"][4] = "verificare_titolo_contiene"
+    md["assert_title_contains"][5] = "タイトル部分文字列を確認する"
+    md["assert_title_contains"][6] = "제목_부분_확인"
+    md["assert_title_contains"][7] = "verificar_título_contém"
+    md["assert_title_contains"][8] = "подтвердить_название_содержит"
+    md["assert_title_contains"][9] = "verificar_título_contiene"
 
     md["get_title"] = ["*"] * num_langs
     md["get_title"][0] = "get_title"
@@ -599,6 +736,18 @@ class MD:
     md["is_text_visible"][8] = "текст_виден"
     md["is_text_visible"][9] = "se_muestra_el_texto"
 
+    md["is_exact_text_visible"] = ["*"] * num_langs
+    md["is_exact_text_visible"][0] = "is_exact_text_visible"
+    md["is_exact_text_visible"][1] = "确切文本是否显示"
+    md["is_exact_text_visible"][2] = "exacte_tekst_zichtbaar"
+    md["is_exact_text_visible"][3] = "est_texte_exactement_affiché"
+    md["is_exact_text_visible"][4] = "è_testo_esatto_visto"
+    md["is_exact_text_visible"][5] = "正確なテキストが表示されています"
+    md["is_exact_text_visible"][6] = "정확한_텍스트가_표시됩니다"
+    md["is_exact_text_visible"][7] = "o_texto_exato_está_visível"
+    md["is_exact_text_visible"][8] = "точный_текст_виден"
+    md["is_exact_text_visible"][9] = "se_muestra_el_texto_exacto"
+
     md["is_element_visible"] = ["*"] * num_langs
     md["is_element_visible"][0] = "is_element_visible"
     md["is_element_visible"][1] = "元素是否可见"
@@ -707,6 +856,31 @@ class MD:
     md["wait_for_element_absent"][8] = "ждать_элемента_отсутствует"
     md["wait_for_element_absent"][9] = "espera_el_elemento_ausente"
 
+    md["wait_for_attribute"] = ["*"] * num_langs
+    md["wait_for_attribute"][0] = "wait_for_attribute"
+    md["wait_for_attribute"][1] = "等待属性"
+    md["wait_for_attribute"][2] = "wachten_op_attribuut"
+    md["wait_for_attribute"][3] = "attendre_un_attribut"
+    md["wait_for_attribute"][4] = "attendere_un_attributo"
+    md["wait_for_attribute"][5] = "属性を待つ"
+    md["wait_for_attribute"][6] = "특성_때까지_기다립니다"
+    md["wait_for_attribute"][7] = "aguardar_o_atributo"
+    md["wait_for_attribute"][8] = "ждать_атрибут"
+    md["wait_for_attribute"][9] = "espera_el_atributo"
+
+    md["wait_for_ready_state_complete"] = ["*"] * num_langs
+    md["wait_for_ready_state_complete"][0] = "wait_for_ready_state_complete"
+    md["wait_for_ready_state_complete"][1] = "等待页面加载完成"
+    md["wait_for_ready_state_complete"][2] = "wacht_tot_de_pagina_is_geladen"
+    md["wait_for_ready_state_complete"][3] = "attendre_que_la_page_se_charge"
+    wfrsc_it = "attendere_il_caricamento_della_pagina"
+    md["wait_for_ready_state_complete"][4] = wfrsc_it
+    md["wait_for_ready_state_complete"][5] = "ページがロードされるのを待ちます"
+    md["wait_for_ready_state_complete"][6] = "페이지가_로드될_때까지_기다립니다"
+    md["wait_for_ready_state_complete"][7] = "aguardar_a_página_carregar"
+    md["wait_for_ready_state_complete"][8] = "ждать_загрузки_страницы"
+    md["wait_for_ready_state_complete"][9] = "esperar_a_que_cargue_la_página"
+
     md["sleep"] = ["*"] * num_langs
     md["sleep"][0] = "sleep"
     md["sleep"][1] = "睡"
@@ -803,6 +977,42 @@ class MD:
     md["js_type"][8] = "JS_введите"
     md["js_type"][9] = "js_escriba"
 
+    md["jquery_click"] = ["*"] * num_langs
+    md["jquery_click"][0] = "jquery_click"
+    md["jquery_click"][1] = "JQUERY单击"
+    md["jquery_click"][2] = "jquery_klik"
+    md["jquery_click"][3] = "jquery_cliquer"
+    md["jquery_click"][4] = "jquery_fare_clic"
+    md["jquery_click"][5] = "JQUERYクリックして"
+    md["jquery_click"][6] = "JQUERY_클릭"
+    md["jquery_click"][7] = "jquery_clique"
+    md["jquery_click"][8] = "JQUERY_нажмите"
+    md["jquery_click"][9] = "jquery_haga_clic"
+
+    md["jquery_update_text"] = ["*"] * num_langs
+    md["jquery_update_text"][0] = "jquery_update_text"
+    md["jquery_update_text"][1] = "JQUERY更新文本"
+    md["jquery_update_text"][2] = "jquery_tekst_bijwerken"
+    md["jquery_update_text"][3] = "jquery_modifier_texte"
+    md["jquery_update_text"][4] = "jquery_aggiornare_testo"
+    md["jquery_update_text"][5] = "JQUERYテキストを更新"
+    md["jquery_update_text"][6] = "JQUERY_텍스트를_업데이트"
+    md["jquery_update_text"][7] = "jquery_atualizar_texto"
+    md["jquery_update_text"][8] = "JQUERY_обновить_текст"
+    md["jquery_update_text"][9] = "jquery_actualizar_texto"
+
+    md["jquery_type"] = ["*"] * num_langs
+    md["jquery_type"][0] = "jquery_type"
+    md["jquery_type"][1] = "JQUERY输入文本"
+    md["jquery_type"][2] = "jquery_typ"
+    md["jquery_type"][3] = "jquery_taper"
+    md["jquery_type"][4] = "jquery_digitare"
+    md["jquery_type"][5] = "JQUERY入力"
+    md["jquery_type"][6] = "JQUERY_입력"
+    md["jquery_type"][7] = "jquery_digitar"
+    md["jquery_type"][8] = "JQUERY_введите"
+    md["jquery_type"][9] = "jquery_escriba"
+
     md["inspect_html"] = ["*"] * num_langs
     md["inspect_html"][0] = "inspect_html"
     md["inspect_html"][1] = "检查HTML"
@@ -826,6 +1036,18 @@ class MD:
     md["save_screenshot"][7] = "salvar_captura_de_tela"
     md["save_screenshot"][8] = "сохранить_скриншот"
     md["save_screenshot"][9] = "guardar_captura_de_pantalla"
+
+    md["save_screenshot_to_logs"] = ["*"] * num_langs
+    md["save_screenshot_to_logs"][0] = "save_screenshot_to_logs"
+    md["save_screenshot_to_logs"][1] = "保存截图到日志"
+    md["save_screenshot_to_logs"][2] = "bewaar_screenshot_om_te_loggen"
+    md["save_screenshot_to_logs"][3] = "enregistrer_capture_d_écran_aux_logs"
+    md["save_screenshot_to_logs"][4] = "salva_screenshot_nei_logs"
+    md["save_screenshot_to_logs"][5] = "ログにスクリーンショットを保存"
+    md["save_screenshot_to_logs"][6] = "로그에_스크린_샷_저장"
+    md["save_screenshot_to_logs"][7] = "salvar_captura_de_tela_para_logs"
+    md["save_screenshot_to_logs"][8] = "сохранить_скриншот_в_логи"
+    md["save_screenshot_to_logs"][9] = "guardar_captura_de_pantalla_para_logs"
 
     md["choose_file"] = ["*"] * num_langs
     md["choose_file"][0] = "choose_file"
@@ -874,6 +1096,30 @@ class MD:
     md["activate_jquery"][7] = "ativar_jquery"
     md["activate_jquery"][8] = "активировать_JQUERY"
     md["activate_jquery"][9] = "activar_jquery"
+
+    md["activate_recorder"] = ["*"] * num_langs
+    md["activate_recorder"][0] = "activate_recorder"
+    md["activate_recorder"][1] = "加载RECORDER"
+    md["activate_recorder"][2] = "activeer_recorder"
+    md["activate_recorder"][3] = "activer_recorder"
+    md["activate_recorder"][4] = "attiva_recorder"
+    md["activate_recorder"][5] = "RECORDERを読み込む"
+    md["activate_recorder"][6] = "RECORDER_로드"
+    md["activate_recorder"][7] = "ativar_recorder"
+    md["activate_recorder"][8] = "активировать_RECORDER"
+    md["activate_recorder"][9] = "activar_recorder"
+
+    md["goto_if_not_url"] = ["*"] * num_langs
+    md["goto_if_not_url"][0] = "goto_if_not_url"
+    md["goto_if_not_url"][1] = "开启如果不网址"
+    md["goto_if_not_url"][2] = "openen_zo_niet_url"
+    md["goto_if_not_url"][3] = "ouvrir_si_non_url"
+    md["goto_if_not_url"][4] = "apri_se_non_url"
+    md["goto_if_not_url"][5] = "URLでない場合は開く"
+    md["goto_if_not_url"][6] = "URL_이_아닌_경우_열기"
+    md["goto_if_not_url"][7] = "abrir_se_não_url"
+    md["goto_if_not_url"][8] = "открыть_если_не_URL"
+    md["goto_if_not_url"][9] = "abrir_que_no_url"
 
     md["ad_block"] = ["*"] * num_langs
     md["ad_block"][0] = "ad_block"
@@ -928,8 +1174,8 @@ class MD:
     md["switch_to_frame"][1] = "切换到帧"
     md["switch_to_frame"][2] = "overschakelen_naar_frame"
     md["switch_to_frame"][3] = "passer_au_cadre"
-    md["switch_to_frame"][4] = "passa_al_frame"
-    md["switch_to_frame"][5] = "フレームに切り替え"
+    md["switch_to_frame"][4] = "passa_alla_cornice"
+    md["switch_to_frame"][5] = "フレームに切り替えます"
     md["switch_to_frame"][6] = "프레임으로_전환"
     md["switch_to_frame"][7] = "mudar_para_o_quadro"
     md["switch_to_frame"][8] = "переключиться_на_кадр"
@@ -944,9 +1190,21 @@ class MD:
     md["switch_to_default_content"][5] = "デフォルトのコンテンツに切り替える"
     md["switch_to_default_content"][6] = "기본_콘텐츠로_전환"
     md["switch_to_default_content"][7] = "mudar_para_o_conteúdo_padrão"
-    md["switch_to_default_content"][8] = (
-        "переключиться_на_содержимое_по_умолчанию")
+    stdc_ru = "переключиться_на_содержимое_по_умолчанию"
+    md["switch_to_default_content"][8] = stdc_ru
     md["switch_to_default_content"][9] = "cambiar_al_contenido_predeterminado"
+
+    md["switch_to_parent_frame"] = ["*"] * num_langs
+    md["switch_to_parent_frame"][0] = "switch_to_parent_frame"
+    md["switch_to_parent_frame"][1] = "切换到父框架"
+    md["switch_to_parent_frame"][2] = "overschakelen_naar_bovenliggend_frame"
+    md["switch_to_parent_frame"][3] = "passer_au_cadre_parent"
+    md["switch_to_parent_frame"][4] = "passa_alla_cornice_principale"
+    md["switch_to_parent_frame"][5] = "親フレームに切り替えます"
+    md["switch_to_parent_frame"][6] = "상위_프레임으로_전환"
+    md["switch_to_parent_frame"][7] = "mudar_para_o_quadro_pai"
+    md["switch_to_parent_frame"][8] = "переключиться_на_родительский_кадр"
+    md["switch_to_parent_frame"][9] = "cambiar_al_marco_principal"
 
     md["open_new_window"] = ["*"] * num_langs
     md["open_new_window"][0] = "open_new_window"
@@ -1070,15 +1328,27 @@ class MD:
 
     md["hover_and_click"] = ["*"] * num_langs
     md["hover_and_click"][0] = "hover_and_click"
-    md["hover_and_click"][1] = "悬停并单击"
+    md["hover_and_click"][1] = "鼠标悬停并单击"
     md["hover_and_click"][2] = "zweven_en_klik"
-    md["hover_and_click"][3] = "planer_au_dessus_et_cliquer"
-    md["hover_and_click"][4] = "passa_il_mouse_sopra_e_fai_clic"
-    md["hover_and_click"][5] = "上にマウスを移動しクリック"
-    md["hover_and_click"][6] = "위로_마우스를_이동하고_클릭"
+    md["hover_and_click"][3] = "passer_la_souris_et_cliquer"
+    md["hover_and_click"][4] = "passare_il_mouse_e_fare_clic"
+    md["hover_and_click"][5] = "マウスオーバーしてクリック"
+    md["hover_and_click"][6] = "마우스오버_및_클릭"
     md["hover_and_click"][7] = "passe_o_mouse_e_clique"
     md["hover_and_click"][8] = "наведите_и_нажмите"
     md["hover_and_click"][9] = "pasar_el_ratón_y_hacer_clic"
+
+    md["hover"] = ["*"] * num_langs
+    md["hover"][0] = "hover"
+    md["hover"][1] = "鼠标悬停"
+    md["hover"][2] = "zweven"
+    md["hover"][3] = "survol_de_la_souris"
+    md["hover"][4] = "passaggio_del_mouse"
+    md["hover"][5] = "マウスオーバー"
+    md["hover"][6] = "마우스오버"
+    md["hover"][7] = "passe_o_mouse"
+    md["hover"][8] = "наведение_мыши"
+    md["hover"][9] = "pasar_el_ratón"
 
     md["is_selected"] = ["*"] * num_langs
     md["is_selected"][0] = "is_selected"
@@ -1488,6 +1758,45 @@ class MD:
     md["assert_pdf_text"][8] = "подтвердить_текст_PDF"
     md["assert_pdf_text"][9] = "verificar_texto_pdf"
 
+    md["download_file"] = ["*"] * num_langs
+    md["download_file"][0] = "download_file"
+    md["download_file"][1] = "下载文件"
+    md["download_file"][2] = "bestand_downloaden"
+    md["download_file"][3] = "télécharger_fichier"
+    md["download_file"][4] = "scaricare_file"
+    md["download_file"][5] = "ファイルをダウンロード"
+    md["download_file"][6] = "파일_다운로드"
+    md["download_file"][7] = "baixar_arquivo"
+    md["download_file"][8] = "скачать_файл"
+    md["download_file"][9] = "descargar_archivo"
+
+    md["is_downloaded_file_present"] = ["*"] * num_langs
+    md["is_downloaded_file_present"][0] = "is_downloaded_file_present"
+    md["is_downloaded_file_present"][1] = "下载的文件是否存在"
+    md["is_downloaded_file_present"][2] = "gedownloade_bestand_aanwezig"
+    md["is_downloaded_file_present"][3] = "est_un_fichier_téléchargé_présent"
+    md["is_downloaded_file_present"][4] = "è_file_scaricato_presente"
+    md["is_downloaded_file_present"][5] = "ダウンロードしたファイルが存在するかどうか"
+    md["is_downloaded_file_present"][6] = "다운로드한_파일이_있습니다"
+    md["is_downloaded_file_present"][7] = "o_arquivo_baixado_está_presente"
+    md["is_downloaded_file_present"][8] = "загруженный_файл_присутствует"
+    md["is_downloaded_file_present"][9] = "está_presente_el_archivo_descargado"
+
+    md["get_path_of_downloaded_file"] = ["*"] * num_langs
+    md["get_path_of_downloaded_file"][0] = "get_path_of_downloaded_file"
+    md["get_path_of_downloaded_file"][1] = "获取下载的文件路径"
+    md["get_path_of_downloaded_file"][2] = "pad_gedownloade_bestand_ophalen"
+    gpodf_fr = "obtenir_chemin_du_fichier_téléchargé"
+    md["get_path_of_downloaded_file"][3] = gpodf_fr
+    gpodf_it = "ottenere_percorso_del_file_scaricato"
+    md["get_path_of_downloaded_file"][4] = gpodf_it
+    md["get_path_of_downloaded_file"][5] = "ダウンロードしたファイルパスを取得する"
+    md["get_path_of_downloaded_file"][6] = "다운로드한_파일_경로_가져_오기"
+    md["get_path_of_downloaded_file"][7] = "obter_caminho_do_arquivo_baixado"
+    md["get_path_of_downloaded_file"][8] = "получить_путь_к_загруженному_файлу"
+    gpodf_es = "obtener_ruta_del_archivo_descargado"
+    md["get_path_of_downloaded_file"][9] = gpodf_es
+
     md["assert_downloaded_file"] = ["*"] * num_langs
     md["assert_downloaded_file"][0] = "assert_downloaded_file"
     md["assert_downloaded_file"][1] = "检查下载的文件"
@@ -1499,6 +1808,18 @@ class MD:
     md["assert_downloaded_file"][7] = "verificar_arquivo_baixado"
     md["assert_downloaded_file"][8] = "подтвердить_загруженный_файл"
     md["assert_downloaded_file"][9] = "verificar_archivo_descargado"
+
+    md["delete_downloaded_file"] = ["*"] * num_langs
+    md["delete_downloaded_file"][0] = "delete_downloaded_file"
+    md["delete_downloaded_file"][1] = "删除下载的文件"
+    md["delete_downloaded_file"][2] = "verwijder_gedownloade_bestand"
+    md["delete_downloaded_file"][3] = "supprimer_fichier_téléchargé"
+    md["delete_downloaded_file"][4] = "eliminare_file_scaricato"
+    md["delete_downloaded_file"][5] = "ダウンロードしたファイルを削除する"
+    md["delete_downloaded_file"][6] = "다운로드한_파일_삭제"
+    md["delete_downloaded_file"][7] = "exclua_arquivo_baixado"
+    md["delete_downloaded_file"][8] = "удалить_загруженный_файл"
+    md["delete_downloaded_file"][9] = "eliminar_archivo_descargado"
 
     md["fail"] = ["*"] * num_langs
     md["fail"][0] = "fail"
@@ -1524,17 +1845,17 @@ class MD:
     md["get"][8] = "получить"
     md["get"][9] = "obtener"
 
-    md["visit"] = ["*"] * num_langs
-    md["visit"][0] = "visit"
-    md["visit"][1] = "访问"
-    md["visit"][2] = "bezoek"
-    md["visit"][3] = "visiter"
-    md["visit"][4] = "visita"
-    md["visit"][5] = "を訪問"
-    md["visit"][6] = "방문"
-    md["visit"][7] = "visitar"
-    md["visit"][8] = "посетить"
-    md["visit"][9] = "visita"
+    md["goto"] = ["*"] * num_langs
+    md["goto"][0] = "goto"
+    md["goto"][1] = "访问"
+    md["goto"][2] = "bezoek"
+    md["goto"][3] = "visiter"
+    md["goto"][4] = "visita"
+    md["goto"][5] = "を訪問"
+    md["goto"][6] = "방문"
+    md["goto"][7] = "visitar"
+    md["goto"][8] = "посетить"
+    md["goto"][9] = "visita"
 
     md["visit_url"] = ["*"] * num_langs
     md["visit_url"][0] = "visit_url"
@@ -1623,7 +1944,7 @@ class MD:
     md["get_attribute"] = ["*"] * num_langs
     md["get_attribute"][0] = "get_attribute"
     md["get_attribute"][1] = "获取属性"
-    md["get_attribute"][2] = "kenmerk_ophalen"
+    md["get_attribute"][2] = "attribuut_ophalen"
     md["get_attribute"][3] = "obtenir_attribut"
     md["get_attribute"][4] = "ottenere_attributo"
     md["get_attribute"][5] = "属性を取得する"
@@ -1635,7 +1956,7 @@ class MD:
     md["set_attribute"] = ["*"] * num_langs
     md["set_attribute"][0] = "set_attribute"
     md["set_attribute"][1] = "设置属性"
-    md["set_attribute"][2] = "kenmerk_instellen"
+    md["set_attribute"][2] = "attribuut_instellen"
     md["set_attribute"][3] = "définir_attribut"
     md["set_attribute"][4] = "imposta_attributo"
     md["set_attribute"][5] = "属性を設定する"
@@ -1647,7 +1968,7 @@ class MD:
     md["set_attributes"] = ["*"] * num_langs
     md["set_attributes"][0] = "set_attributes"
     md["set_attributes"][1] = "设置所有属性"
-    md["set_attributes"][2] = "kenmerken_instellen"
+    md["set_attributes"][2] = "attributen_instellen"
     md["set_attributes"][3] = "définir_attributs"
     md["set_attributes"][4] = "impostare_gli_attributi"
     md["set_attributes"][5] = "すべての属性を設定"
@@ -1901,18 +2222,18 @@ class MD:
     md["fill"][8] = "введите"
     md["fill"][9] = "escriba"
 
-    # "goto" -> duplicate of "visit"
-    md["goto"] = ["*"] * num_langs
-    md["goto"][0] = "goto"
-    md["goto"][1] = "访问"
-    md["goto"][2] = "bezoek"
-    md["goto"][3] = "visiter"
-    md["goto"][4] = "visita"
-    md["goto"][5] = "を訪問"
-    md["goto"][6] = "방문"
-    md["goto"][7] = "visitar"
-    md["goto"][8] = "посетить"
-    md["goto"][9] = "visita"
+    # "visit" -> duplicate of "goto"
+    md["visit"] = ["*"] * num_langs
+    md["visit"][0] = "visit"
+    md["visit"][1] = "访问"
+    md["visit"][2] = "bezoek"
+    md["visit"][3] = "visiter"
+    md["visit"][4] = "visita"
+    md["visit"][5] = "を訪問"
+    md["visit"][6] = "방문"
+    md["visit"][7] = "visitar"
+    md["visit"][8] = "посетить"
+    md["visit"][9] = "visita"
 
     # "go_to" -> duplicate of "visit"
     md["go_to"] = ["*"] * num_langs
@@ -1966,6 +2287,45 @@ class MD:
     md["reload_page"][8] = "обновить_страницу"
     md["reload_page"][9] = "actualizar_la_página"
 
+    # "open_if_not_url" -> duplicate of "goto_if_not_url"
+    md["open_if_not_url"] = ["*"] * num_langs
+    md["open_if_not_url"][0] = "open_if_not_url"
+    md["open_if_not_url"][1] = "开启如果不网址"
+    md["open_if_not_url"][2] = "openen_zo_niet_url"
+    md["open_if_not_url"][3] = "ouvrir_si_non_url"
+    md["open_if_not_url"][4] = "apri_se_non_url"
+    md["open_if_not_url"][5] = "URLでない場合は開く"
+    md["open_if_not_url"][6] = "URL_이_아닌_경우_열기"
+    md["open_if_not_url"][7] = "abrir_se_não_url"
+    md["open_if_not_url"][8] = "открыть_если_не_URL"
+    md["open_if_not_url"][9] = "abrir_que_no_url"
+
+    # "open_new_tab" -> duplicate of "open_new_window"
+    md["open_new_tab"] = ["*"] * num_langs
+    md["open_new_tab"][0] = "open_new_tab"
+    md["open_new_tab"][1] = "打开新窗口"
+    md["open_new_tab"][2] = "nieuw_venster_openen"
+    md["open_new_tab"][3] = "ouvrir_une_nouvelle_fenêtre"
+    md["open_new_tab"][4] = "apri_una_nuova_finestra"
+    md["open_new_tab"][5] = "新しいウィンドウを開く"
+    md["open_new_tab"][6] = "새_창_열기"
+    md["open_new_tab"][7] = "abrir_nova_janela"
+    md["open_new_tab"][8] = "открыть_новое_окно"
+    md["open_new_tab"][9] = "abrir_una_nueva_ventana"
+
+    # "switch_to_newest_tab" -> duplicate of "switch_to_newest_window"
+    md["switch_to_newest_tab"] = ["*"] * num_langs
+    md["switch_to_newest_tab"][0] = "switch_to_newest_tab"
+    md["switch_to_newest_tab"][1] = "切换到最新的窗口"
+    md["switch_to_newest_tab"][2] = "overschakelen_naar_nieuwste_venster"
+    md["switch_to_newest_tab"][3] = "passer_à_fenêtre_dernière"
+    md["switch_to_newest_tab"][4] = "passa_alla_finestra_ultimo"
+    md["switch_to_newest_tab"][5] = "最新のウィンドウに切り替えます"
+    md["switch_to_newest_tab"][6] = "최신_창으로_전환"
+    md["switch_to_newest_tab"][7] = "mudar_para_a_janela_última"
+    md["switch_to_newest_tab"][8] = "переключиться_на_последнее_окно"
+    md["switch_to_newest_tab"][9] = "cambiar_a_ventana_última"
+
     # "get_page_title" -> duplicate of "get_title"
     md["get_page_title"] = ["*"] * num_langs
     md["get_page_title"][0] = "get_page_title"
@@ -1991,6 +2351,19 @@ class MD:
     md["click_link_text"][7] = "clique_texto_do_link"
     md["click_link_text"][8] = "нажмите_ссылку"
     md["click_link_text"][9] = "clic_texto_del_enlace"
+
+    # "right_click" -> duplicate of "context_click"
+    md["right_click"] = ["*"] * num_langs
+    md["right_click"][0] = "right_click"
+    md["right_click"][1] = "上下文点击"
+    md["right_click"][2] = "contextklik"
+    md["right_click"][3] = "contextuel_cliquer"
+    md["right_click"][4] = "clic_contestuale"
+    md["right_click"][5] = "コンテキストクリック"
+    md["right_click"][6] = "컨텍스트_클릭"
+    md["right_click"][7] = "clique_de_contexto"
+    md["right_click"][8] = "контекстный_щелчок"
+    md["right_click"][9] = "clic_de_contexto"
 
     # "send_keys" -> duplicate of "add_text"
     md["send_keys"] = ["*"] * num_langs
@@ -2022,7 +2395,7 @@ class MD:
     md["set_attribute_all"] = ["*"] * num_langs
     md["set_attribute_all"][0] = "set_attribute_all"
     md["set_attribute_all"][1] = "设置所有属性"
-    md["set_attribute_all"][2] = "kenmerken_instellen"
+    md["set_attribute_all"][2] = "attributen_instellen"
     md["set_attribute_all"][3] = "définir_attributs"
     md["set_attribute_all"][4] = "impostare_gli_attributi"
     md["set_attribute_all"][5] = "すべての属性を設定"
@@ -2070,6 +2443,19 @@ class MD:
     md["assert_text_visible"][8] = "подтвердить_текст"
     md["assert_text_visible"][9] = "verificar_texto"
 
+    # "assert_link" -> duplicate of "assert_link_text"
+    md["assert_link"] = ["*"] * num_langs
+    md["assert_link"][0] = "assert_link"
+    md["assert_link"][1] = "断言链接文本"
+    md["assert_link"][2] = "controleren_linktekst"
+    md["assert_link"][3] = "vérifier_texte_du_lien"
+    md["assert_link"][4] = "verificare_testo_del_collegamento"
+    md["assert_link"][5] = "リンクテキストを確認する"
+    md["assert_link"][6] = "링크_텍스트_확인"
+    md["assert_link"][7] = "verificar_texto_do_link"
+    md["assert_link"][8] = "подтвердить_ссылку"
+    md["assert_link"][9] = "verificar_texto_del_enlace"
+
     # "assert_no_broken_links" -> duplicate of "assert_no_404_errors"
     md["assert_no_broken_links"] = ["*"] * num_langs
     md["assert_no_broken_links"][0] = "assert_no_broken_links"
@@ -2096,6 +2482,19 @@ class MD:
     md["block_ads"][8] = "блокировать_рекламу"
     md["block_ads"][9] = "bloquear_anuncios"
 
+    # "scroll_to_element" -> duplicate of "scroll_to"
+    md["scroll_to_element"] = ["*"] * num_langs
+    md["scroll_to_element"][0] = "scroll_to_element"
+    md["scroll_to_element"][1] = "滚动到"
+    md["scroll_to_element"][2] = "scrollen_naar"
+    md["scroll_to_element"][3] = "déménager_à"
+    md["scroll_to_element"][4] = "scorrere_fino_a"
+    md["scroll_to_element"][5] = "スクロールして"
+    md["scroll_to_element"][6] = "요소로_스크롤"
+    md["scroll_to_element"][7] = "rolar_para"
+    md["scroll_to_element"][8] = "прокрутить_к"
+    md["scroll_to_element"][9] = "desplazarse_a"
+
     # "start_tour" -> duplicate of "play_tour"
     md["start_tour"] = ["*"] * num_langs
     md["start_tour"][0] = "start_tour"
@@ -2108,6 +2507,21 @@ class MD:
     md["start_tour"][7] = "jogar_o_tour"
     md["start_tour"][8] = "играть_тур"
     md["start_tour"][9] = "reproducir_la_gira"
+
+    # "delete_downloaded_file_if_present" -> double of "delete_downloaded_file"
+    md["delete_downloaded_file_if_present"] = ["*"] * num_langs
+    ddfip_en = "delete_downloaded_file_if_present"
+    md["delete_downloaded_file_if_present"][0] = ddfip_en
+    md["delete_downloaded_file_if_present"][1] = "删除下载的文件"
+    ddfip_nl = "verwijder_gedownloade_bestand"
+    md["delete_downloaded_file_if_present"][2] = ddfip_nl
+    md["delete_downloaded_file_if_present"][3] = "supprimer_fichier_téléchargé"
+    md["delete_downloaded_file_if_present"][4] = "eliminare_file_scaricato"
+    md["delete_downloaded_file_if_present"][5] = "ダウンロードしたファイルを削除する"
+    md["delete_downloaded_file_if_present"][6] = "다운로드한_파일_삭제"
+    md["delete_downloaded_file_if_present"][7] = "exclua_arquivo_baixado"
+    md["delete_downloaded_file_if_present"][8] = "удалить_загруженный_файл"
+    md["delete_downloaded_file_if_present"][9] = "eliminar_archivo_descargado"
 
     # "wait_for_and_accept_alert" -> duplicate of "accept_alert"
     md["wait_for_and_accept_alert"] = ["*"] * num_langs

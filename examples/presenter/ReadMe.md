@@ -1,12 +1,12 @@
-<h3 align="left"><img src="https://seleniumbase.io/cdn/img/sb_logo_b.png" alt="SeleniumBase" width="360" /></h3>
+<!-- SeleniumBase Docs -->
 
-<h1> 📰 Presenter 📑 </h1>
+<h2><a href="https://github.com/seleniumbase/SeleniumBase/"><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32"></a> 📑 Presenter 🎞️</h2>
 
-<p>SeleniumBase Presenter lets you use Python to generate HTML presentations from Reveal JS.</p>
+<p>SeleniumBase Presenter (slide-maker) lets you use Python to generate HTML presentations.</p>
 
 <b>Here's a sample presentation:</b>
 
-<a href="https://seleniumbase.io/other/presenter.html"><img width="500" src="https://seleniumbase.io/other/presenter.gif" title="Screenshot"></a><br>
+<a href="https://seleniumbase.github.io/other/presenter.html"><img width="500" src="https://seleniumbase.github.io/other/presenter.gif" title="Screenshot"></a><br>
 
 ([Click on the image/GIF for the actual presentation](https://seleniumbase.io/other/presenter.html))
 
@@ -16,14 +16,14 @@ Slides can include HTML, code, images, and iframes.
 
 Here's how to run the example presentation:
 
-```bash
+```zsh
 cd examples/presenter
 pytest my_presentation.py
 ```
 
-**Here's a presentation with a chart:**
+<b>Here's a presentation with a chart:</b>
 
-<a href="https://seleniumbase.io/other/core_presentation.html"><img width="428" src="https://seleniumbase.io/other/sb_core_areas.png" title="Screenshot"></a><br>
+<a href="https://seleniumbase.github.io/other/core_presentation.html"><img width="428" src="https://seleniumbase.github.io/other/sb_core_areas.png" title="Screenshot"></a><br>
 
 ([Click on the image/GIF for the actual presentation](https://seleniumbase.io/other/core_presentation.html))
 
@@ -31,13 +31,12 @@ pytest my_presentation.py
 
 Here's how to run that example:
 
-```bash
+```zsh
 cd examples/presenter
 pytest core_presentation.py
 ```
 
-
-<h3><img src="https://seleniumbase.io/img/sb_icon.png" title="SeleniumBase" width="24" /> Creating a new presentation:</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="24" /> Creating a new presentation:</h3>
 
 ```python
 self.create_presentation(name=None, theme="serif", transition="default")
@@ -59,8 +58,7 @@ If creating multiple presentations at the same time, you can pass the ``name`` p
 Notes are disabled by default. You can enable notes by specifying:
 ``show_notes=True``
 
-
-<h3><img src="https://seleniumbase.io/img/sb_icon.png" title="SeleniumBase" width="24" /> Adding a slide to a presentation:</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="24" /> Adding a slide to a presentation:</h3>
 
 ```python
 self.add_slide(content=None, image=None, code=None, iframe=None,
@@ -83,8 +81,7 @@ self.add_slide(content=None, image=None, code=None, iframe=None,
 """
 ```
 
-
-<h3><img src="https://seleniumbase.io/img/sb_icon.png" title="SeleniumBase" width="24" /> Running a presentation:</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="24" /> Running a presentation:</h3>
 
 ```python
 self.begin_presentation(
@@ -107,14 +104,13 @@ Before the presentation is run, the full HTML is saved to the ``saved_presentati
 
 All methods have the optional ``name`` argument, which is only needed if you're creating multiple presentations at once.
 
-<h3><img src="https://seleniumbase.io/img/sb_icon.png" title="SeleniumBase" width="24" /> Here's an example of using SeleniumBase Presenter:</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="24" /> Here's an example of using SeleniumBase Presenter:</h3>
 
 ```python
 from seleniumbase import BaseCase
-
+BaseCase.main(__name__, __file__)
 
 class MyPresenterClass(BaseCase):
-
     def test_presenter(self):
         self.create_presentation(theme="serif")
         self.add_slide(
@@ -147,21 +143,20 @@ class MyPresenterClass(BaseCase):
             '<tr><td>O</td><td>Overview Mode Toggle</td></tr>\n'
             '<tr><td>esc</td><td>Exit Full Screen / Overview Mode</td></tr>\n'
             '<tr><td><b>.</b></td><td>Pause/Resume Toggle</td></tr>\n'
-            '<tr><td>space</td><td>Next Slide (alternative)</td></tr></table>'
-            )
+            '<tr><td>space</td><td>Next Slide (alternative)</td></tr></table>')
         self.add_slide(
             '<h3>Add <b>images</b> to slides:</h3>',
-            image="https://seleniumbase.io/other/seagulls.jpg")
+            image="https://seleniumbase.github.io/other/seagulls.jpg")
         self.add_slide(
             '<h3>Add <b>code</b> to slides:</h3>',
             code=(
                 'from seleniumbase import BaseCase\n\n'
                 'class MyTestClass(BaseCase):\n\n'
                 '    def test_basics(self):\n'
-                '        self.open("https://store.xkcd.com/search")\n'
+                '        self.goto("https://store.xkcd.com/search")\n'
                 '        self.type(\'input[name="q"]\', "xkcd book\\n")\n'
                 '        self.assert_text("xkcd: volume 0", "h3")\n'
-                '        self.open("https://xkcd.com/353/")\n'
+                '        self.goto("https://xkcd.com/353/")\n'
                 '        self.assert_title("xkcd: Python")\n'
                 '        self.assert_element(\'img[alt="Python"]\')\n'
                 '        self.click(\'a[rel="license"]\')\n'
@@ -175,7 +170,7 @@ class MyPresenterClass(BaseCase):
                 'from seleniumbase import BaseCase\n\n'
                 '<mark>class MyTestClass(BaseCase):</mark>\n\n'
                 '    def test_basics(self):\n'
-                '        self.open("https://store.xkcd.com/search")\n'
+                '        self.goto("https://store.xkcd.com/search")\n'
                 '        self.type(\'input[name="q"]\', "xkcd book\\n")\n'
                 '        self.assert_text("xkcd: volume 0", "h3")'))
         self.add_slide(
@@ -221,18 +216,18 @@ class MyPresenterClass(BaseCase):
                 'self.create_presentation(theme="league")'))
         self.add_slide(
             '<h2><b>The End</b></h2>',
-            image="https://seleniumbase.io/img/sb_logo_10.png")
+            image="https://seleniumbase.github.io/img/sb_logo_10.png")
         self.begin_presentation(
             filename="presenter.html", show_notes=True, interval=0)
 ```
 
 That example is from [my_presentation.py](https://github.com/seleniumbase/SeleniumBase/blob/master/examples/presenter/my_presentation.py), which you can run from the ``examples/presenter`` folder with the following command:
 
-```bash
+```zsh
 pytest my_presentation.py
 ```
 
-<h3><img src="https://seleniumbase.io/img/sb_icon.png" title="SeleniumBase" width="24" /> Saving a presentation:</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="24" /> Saving a presentation:</h3>
 
 If you want to save the presentation you created as an HTML file, use:
 
@@ -241,6 +236,50 @@ self.save_presentation(filename="my_presentation.html", show_notes=True)
 ```
 
 Presentations automatically get saved when calling:
+
 ```python
 self.begin_presentation(show_notes=True)
 ```
+
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="24" /> Special abilities:</h3>
+
+If you want to highlight multiple lines at different times in the same slide with the `<mark>` / `</mark>` tags, you can use the new `<mk-0>`-`</mk-0>`, `<mk-1>`-`</mk-1>` tags, which will generate multiple HTML slides from one Python slide.
+
+Example:
+
+```python
+self.add_slide(
+    code=(
+        <p><mk-0>Highlight this on the 1st generated slide</mk-0></p>
+        <p><mk-1>Highlight this on the 2nd generated slide</mk-1></p>
+        <p><mk-2>Highlight this on the 3rd generated slide</mk-2></p>
+        <p><mk-3>Highlight this on the 4th generated slide</mk-3></p>
+    )
+)
+```
+
+Those should automatically get converted to `<mark>` ... `</mark>` on their turn:
+
+Eg. First generated slide:
+
+```html
+<p><mark>Highlight this on the first generated slide</mark></p>
+<p>Highlight this on the second generated slide</p>
+<p>Highlight this on the third generated slide</p>
+<p>Highlight this on the fourth generated slide></p>
+```
+
+Eg. Second generated slide:
+
+```html
+<p>Highlight this on the first generated slide</p>
+<p><mark>Highlight this on the second generated slide</mark></p>
+<p>Highlight this on the third generated slide</p>
+<p>Highlight this on the fourth generated slide></p>
+```
+
+Etc...
+
+--------
+
+<h3 align="left"><img src="https://seleniumbase.github.io/cdn/img/sb_logo_b.png" alt="SeleniumBase" width="240" /></h3>

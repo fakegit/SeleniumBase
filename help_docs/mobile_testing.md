@@ -1,28 +1,26 @@
-<p align="center"><a href="https://github.com/seleniumbase/SeleniumBase/blob/master/README.md"><img src="https://seleniumbase.io/cdn/img/sb_text_f.png" alt="SeleniumBase" title="SeleniumBase" width="290" /></a></p>
+<!-- SeleniumBase Docs -->
 
-<h2><img src="https://seleniumbase.io/img/sb_icon.png" title="SeleniumBase" width="30" /> Mobile Testing</h2>
+<h2><a href="https://github.com/seleniumbase/SeleniumBase/"><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32"></a> Mobile Mode / Mobile Testing</h2>
 
-Use ``--mobile`` to run SeleniumBase tests using Chrome's mobile device emulator with default values for Device Metrics and User-Agent.
+Use `--mobile` to run SeleniumBase tests using Chrome's mobile device emulator with default values for Device Metrics and User-Agent.
 
 <b>Here's an example mobile test:</b>
 
-[SeleniumBase/examples/test_skype_site.py](https://github.com/seleniumbase/SeleniumBase/blob/master/examples/test_skype_site.py)
+[SeleniumBase/examples/test_roblox_mobile.py](https://github.com/seleniumbase/SeleniumBase/blob/master/examples/test_roblox_mobile.py)
 
-```bash
-pytest test_skype_site.py --mobile
+```zsh
+pytest test_roblox_mobile.py --mobile
 ```
-
-[<img src="https://seleniumbase.io/cdn/gif/skype_mobile_test_2.gif" title="SeleniumBase Mobile Testing">](https://seleniumbase.io/cdn/gif/skype_mobile_test_2.gif)
 
 To configure Device Metrics, use:
 
-```bash
+```zsh
 --metrics="CSS_Width,CSS_Height,Pixel_Ratio"
 ```
 
 To configure the User-Agent, use:
 
-```bash
+```zsh
 --agent="USER-AGENT-STRING"
 ```
 
@@ -40,23 +38,41 @@ To find real User-Agent strings, see:
 
 [SeleniumBase/examples/test_swag_labs.py](https://github.com/seleniumbase/SeleniumBase/blob/master/examples/test_swag_labs.py)
 
-```bash
+```zsh
 pytest test_swag_labs.py --mobile
 ```
 
-[<img src="https://seleniumbase.io/cdn/gif/swag_mobile_2.gif" title="SeleniumBase Mobile Testing">](https://seleniumbase.io/cdn/gif/swag_mobile.gif)
+<a href="https://seleniumbase.github.io/cdn/gif/swag_mobile.gif"><img src="https://seleniumbase.github.io/cdn/gif/swag_mobile_2.gif" alt="SeleniumBase Mobile Testing" title="SeleniumBase Mobile Testing"></a>
 
 <b>Here's an example of configuring mobile settings for that test:</b>
 
-```bash
+```zsh
 # Run tests using Chrome's mobile device emulator (default settings)
 pytest test_swag_labs.py --mobile
 
 # Run mobile tests specifying CSS Width, CSS Height, and Pixel-Ratio
-pytest test_swag_labs.py --mobile --metrics="411,731,3"
+pytest test_swag_labs.py --mobile --metrics="360,640,2"
 
 # Run mobile tests specifying the user agent
 pytest test_swag_labs.py --mobile --agent="Mozilla/5.0 (Linux; Android 9; Pixel 3 XL)"
+```
+
+--------
+
+For some [SeleniumBase Syntax Formats](https://github.com/seleniumbase/SeleniumBase/blob/master/help_docs/syntax_formats.md), you can also use `mobile=True` to run tests in Mobile Mode:
+
+```python
+from seleniumbase import Driver
+
+driver = Driver(mobile=True)
+try:
+    driver.goto("https://www.roblox.com/")
+    driver.assert_element("#download-the-app-container")
+    driver.assert_text("Roblox for Android")
+    driver.highlight('span:contains("Roblox for Android")', loops=8)
+    driver.highlight('span:contains("Continue in App")', loops=8)
+finally:
+    driver.quit()
 ```
 
 --------

@@ -1,16 +1,16 @@
-<h3 align="left"><img src="https://seleniumbase.io/cdn/img/sb_logo_b.png" alt="SeleniumBase" width="350" /></h3>
+<!-- SeleniumBase Docs -->
 
-<h2> 📊 ChartMaker 📈 </h2>
+<h2><a href="https://github.com/seleniumbase/SeleniumBase/"><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32"></a> 📊 ChartMaker 📶</h2>
 
-<p>SeleniumBase ChartMaker lets you use Python to generate HTML charts from HighCharts JS.</p>
+<p>SeleniumBase ChartMaker lets you use Python to generate HTML charts.</p>
 
-<a href="https://seleniumbase.io/other/chart_presentation.html"><img width="480" src="https://seleniumbase.io/cdn/gif/chart_pres.gif" title="Chart Presentation"></a><br>
+<a href="https://seleniumbase.io/other/chart_presentation.html"><img width="480" src="https://seleniumbase.github.io/cdn/gif/chart_pres.gif" title="Chart Presentation"></a><br>
 
 ([Click to see a presentation with multiple charts](https://seleniumbase.io/other/chart_presentation.html))
 
 Here's how to run a simple pie chart presentation from [GitHub => seleniumbase/SeleniumBase/examples/chart_maker](https://github.com/seleniumbase/SeleniumBase/tree/master/examples/chart_maker):
 
-```bash
+```zsh
 cd examples/chart_maker
 pytest my_chart.py
 ```
@@ -19,6 +19,7 @@ Here's the code for that pie chart presentation ([GitHub => seleniumbase/Seleniu
 
 ```python
 from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 class MyChartMakerClass(BaseCase):
     def test_chart_maker(self):
@@ -33,30 +34,31 @@ class MyChartMakerClass(BaseCase):
 
 Here's how to run an example presentation with multiple charts:
 
-```bash
+```zsh
 cd examples/chart_maker
 pytest chart_presentation.py
 ```
 
 Here are screenshots from the examples:
 
-<a href="https://seleniumbase.io/other/chart_presentation.html"><img width="500" src="https://seleniumbase.io/other/sample_pie_chart.png" title="Screenshot"></a><br>
+<a href="https://seleniumbase.github.io/other/chart_presentation.html"><img width="500" src="https://seleniumbase.github.io/other/sample_pie_chart.png" title="Screenshot"></a><br>
 
-<a href="https://seleniumbase.io/other/sample_column_chart.png"><img width="500" src="https://seleniumbase.io/other/sample_column_chart.png" title="Screenshot"></a><br>
+<a href="https://seleniumbase.github.io/other/sample_column_chart.png"><img width="500" src="https://seleniumbase.github.io/other/sample_column_chart.png" title="Screenshot"></a><br>
 
-<a href="https://seleniumbase.io/other/sample_bar_chart.png"><img width="500" src="https://seleniumbase.io/other/sample_bar_chart.png" title="Screenshot"></a><br>
+<a href="https://seleniumbase.github.io/other/sample_bar_chart.png"><img width="500" src="https://seleniumbase.github.io/other/sample_bar_chart.png" title="Screenshot"></a><br>
 
-<a href="https://seleniumbase.io/other/sample_line_chart.png"><img width="500" src="https://seleniumbase.io/other/sample_line_chart.png" title="Screenshot"></a><br>
+<a href="https://seleniumbase.github.io/other/sample_line_chart.png"><img width="500" src="https://seleniumbase.github.io/other/sample_line_chart.png" title="Screenshot"></a><br>
 
-<a href="https://seleniumbase.io/other/sample_area_chart.png"><img width="500" src="https://seleniumbase.io/other/sample_area_chart.png" title="Screenshot"></a><br>
+<a href="https://seleniumbase.github.io/other/sample_area_chart.png"><img width="500" src="https://seleniumbase.github.io/other/sample_area_chart.png" title="Screenshot"></a><br>
 
-<a href="https://seleniumbase.io/other/multi_series_chart.png"><img width="500" src="https://seleniumbase.io/other/multi_series_chart.png" title="Screenshot"></a><br>
+<a href="https://seleniumbase.github.io/other/multi_series_chart.png"><img width="500" src="https://seleniumbase.github.io/other/multi_series_chart.png" title="Screenshot"></a><br>
 
 
-<h3><img src="https://seleniumbase.io/img/logo6.png" title="SeleniumBase" width="32" /> Here's a line chart example:</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32" /> Here's a line chart example:</h3>
 
 ```python
 from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 class MyChartMakerClass(BaseCase):
     def test_chart_maker(self):
@@ -76,20 +78,20 @@ class MyChartMakerClass(BaseCase):
 
 This example is from [test_line_chart.py](https://github.com/seleniumbase/SeleniumBase/blob/master/examples/chart_maker/test_line_chart.py), which you can run from the ``examples/chart_maker`` folder with the following command:
 
-```bash
+```zsh
 pytest test_line_chart.py
 ```
 
 Because that presentation above has an ``interval`` set to ``8``, it will automatically advance to the next slide after 8 seconds. (Or exit if there are no more slides.)
 
 
-<h3><img src="https://seleniumbase.io/img/logo6.png" title="SeleniumBase" width="32" /> For a more advanced example (multiple charts in a presentation):</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32" /> For a more advanced example (multiple charts in a presentation):</h3>
 
 ```python
 from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 class MyChartMakerClass(BaseCase):
-
     def test_chart_maker_presentation(self):
         self.create_presentation(theme="sky")
 
@@ -126,7 +128,7 @@ class MyChartMakerClass(BaseCase):
 
 Here's how to run that example:
 
-```bash
+```zsh
 cd examples/chart_maker
 pytest chart_presentation.py
 ```
@@ -138,7 +140,7 @@ pytest chart_presentation.py
 Multi-Series charts can also be created. Try the available examples to learn more.
 
 
-<h2><img src="https://seleniumbase.io/img/logo6.png" title="SeleniumBase" width="32" /> ChartMaker API</h2>
+<h2><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32" /> ChartMaker API</h2>
 
 ```python
 self.create_pie_chart(
@@ -260,7 +262,7 @@ self.create_area_chart(
 If creating multiple charts at the same time, you can pass the ``chart_name`` parameter to distinguish between different charts.
 
 
-<h3><img src="https://seleniumbase.io/img/logo6.png" title="SeleniumBase" width="32" /> Adding a data point to a chart:</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32" /> Adding a data point to a chart:</h3>
 
 ```python
 self.add_data_point(label, value, color=None, chart_name=None):
@@ -277,7 +279,7 @@ self.add_data_point(label, value, color=None, chart_name=None):
 ```
 
 
-<h3><img src="https://seleniumbase.io/img/logo6.png" title="SeleniumBase" width="32" /> Adding a new data series to an existing chart:</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32" /> Adding a new data series to an existing chart:</h3>
 
 ```python
 self.add_series_to_chart(self, data_name=None, chart_name=None):
@@ -291,7 +293,7 @@ self.add_series_to_chart(self, data_name=None, chart_name=None):
 ```
 
 
-<h3><img src="https://seleniumbase.io/img/logo6.png" title="SeleniumBase" width="32" /> Saving a chart to a file:</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32" /> Saving a chart to a file:</h3>
 
 ```python
 self.save_chart(chart_name=None, filename=None):
@@ -307,7 +309,7 @@ self.save_chart(chart_name=None, filename=None):
 The full HTML of the chart is saved to the ``saved_charts/`` folder.
 
 
-<h3><img src="https://seleniumbase.io/img/logo6.png" title="SeleniumBase" width="32" /> Extracting the HTML of a chart:</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32" /> Extracting the HTML of a chart:</h3>
 
 ```python
 self.extract_chart(chart_name=None):
@@ -319,7 +321,7 @@ self.extract_chart(chart_name=None):
 ```
 
 
-<h3><img src="https://seleniumbase.io/img/logo6.png" title="SeleniumBase" width="32" /> Displaying a chart in the browser window:</h3>
+<h3><img src="https://seleniumbase.github.io/img/logo6.png" title="SeleniumBase" width="32" /> Displaying a chart in the browser window:</h3>
 
 ```python
 self.display_chart(chart_name=None, filename=None):
@@ -335,3 +337,8 @@ self.display_chart(chart_name=None, filename=None):
 ```
 
 All methods have the optional ``chart_name`` argument, which is only needed when storing multiple charts at the same time.
+
+--------
+
+<!-- YouTube View --><a href="https://www.youtube.com/watch?v=TMQx3FLWvUY"><img src="http://img.youtube.com/vi/TMQx3FLWvUY/0.jpg" title="SeleniumBase on YouTube" width="285" /></a>
+<!-- GitHub Only --><p>(<b><a href="https://www.youtube.com/watch?v=TMQx3FLWvUY">Video: Pie Charts on Pi Day</a></b>)</p>

@@ -1,12 +1,11 @@
-""" Testing EventFiringWebDriver with AbstractEventListener """
-
+"""Test EventFiringWebDriver with AbstractEventListener"""
 from selenium.webdriver.support.events import EventFiringWebDriver
 from selenium.webdriver.support.events import AbstractEventListener
 from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 
 class MyListener(AbstractEventListener):
-
     def before_navigate_to(self, url, driver):
         print("Before navigating to: %s" % url)
 
@@ -27,12 +26,14 @@ class MyListener(AbstractEventListener):
 
 
 class EventFiringTests(BaseCase):
-
     def test_event_firing_webdriver(self):
         self.driver = EventFiringWebDriver(self.driver, MyListener())
         print("\n* EventFiringWebDriver example *")
-        self.open("https://xkcd.com/1862/")
+        self.goto("https://xkcd.com/1862/")
         self.click("link=About")
-        self.open("https://store.xkcd.com/search")
-        self.type('input[name="q"]', "xkcd book\n")
-        self.open("https://xkcd.com/1822/")
+        self.goto("https://xkcd.com/1820/")
+        self.assert_text("Security Advice", "#ctitle")
+        self.click('a:contains("Next >")')
+        self.assert_text("Incinerator", "#ctitle")
+        self.click('a[rel="next"]')
+        self.assert_text("Existential Bug Reports", "#ctitle")

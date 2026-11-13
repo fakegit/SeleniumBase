@@ -5,18 +5,52 @@ change the values here and add "--settings=custom_settings.py" when running.
 
 # Default timeout values for waiting for page elements to appear.
 MINI_TIMEOUT = 2
-SMALL_TIMEOUT = 6
+SMALL_TIMEOUT = 7
 LARGE_TIMEOUT = 10
 EXTREME_TIMEOUT = 30
 
-# If False, only logs from the most recent test run will be saved.
+# Default page load timeout.
+# In global Selenium settings, this value is set to 300 seconds by default.
+# When the timeout is exceeded: "Timed out receiving message from renderer"
+PAGE_LOAD_TIMEOUT = 120
+
+# Default page load strategy.
+# ["normal", "eager", "none"]
+# Selenium default = "normal"
+PAGE_LOAD_STRATEGY = "normal"
+
+# If True, existing logs from past test runs will be saved and take up space.
+# If False, only the logs from the most recent test run will be saved locally.
+# You can also archive existing logs on the command line with: "--archive_logs"
 ARCHIVE_EXISTING_LOGS = False
+
+# If True, existing downloads from past runs will be saved and take up space.
+# If False, only the downloads from the most recent run will be saved locally.
 ARCHIVE_EXISTING_DOWNLOADS = False
 
-# Waiting for Document.readyState to be "Complete" after browser actions.
+# If True, the last page screenshot will include the <body> and background.
+# If False, the last page screenshot will only include the <body> section.
+# Depending on the screen size, including a background could make the <body>
+# appear very small in the screenshot, which may require manually zooming in
+# on the <body> to see page details if you decide to include the background.
+SCREENSHOT_WITH_BACKGROUND = False
+
+# If True, switch to new tabs automatically if a click opens a new one.
+# (Only happens if the initial tab is still on same URL as before.)
+SWITCH_TO_NEW_TABS_ON_CLICK = True
+
+"""
+These methods add JS waits, such as self.wait_for_ready_state_complete(),
+which waits for document.readyState to be "complete" after Selenium actions.
+"""
+# Called after self.goto(url), NOT driver.get(url)
 WAIT_FOR_RSC_ON_PAGE_LOADS = True
-WAIT_FOR_RSC_ON_CLICKS = True
+# Called after self.click(selector), NOT element.click()
+WAIT_FOR_RSC_ON_CLICKS = False
+# Wait for AngularJS calls to complete after various browser actions.
 WAIT_FOR_ANGULARJS = True
+# Skip ALL calls to wait_for_ready_state_complete() and wait_for_angularjs().
+SKIP_JS_WAITS = False
 
 # Changing the default behavior of Demo Mode. Activate with: --demo_mode
 DEFAULT_DEMO_MODE_TIMEOUT = 0.5
@@ -30,6 +64,10 @@ DISABLE_CSP_ON_CHROME = False
 # If True and --proxy=IP_ADDRESS:PORT is invalid, then error immediately.
 RAISE_INVALID_PROXY_STRING_EXCEPTION = True
 
+# Default browser coordinates when opening new windows for tests.
+WINDOW_START_X = 20
+WINDOW_START_Y = 54
+
 # Default browser resolutions when opening new windows for tests.
 # (Headless resolutions take priority, and include all browsers.)
 # (Firefox starts maximized by default when running in GUI Mode.)
@@ -37,6 +75,12 @@ CHROME_START_WIDTH = 1250
 CHROME_START_HEIGHT = 840
 HEADLESS_START_WIDTH = 1440
 HEADLESS_START_HEIGHT = 1880
+
+# If True, hides messages related to downloading drivers.
+# If False, you'll see details about downloading drivers.
+# (This only affects driver downloads coming from tests.)
+# (Eg. Using "sbase get chromedriver" won't hide output.)
+HIDE_DRIVER_DOWNLOADS = False
 
 # Changing the default behavior of MasterQA Mode.
 MASTERQA_DEFAULT_VALIDATION_MESSAGE = "Does the page look good?"
@@ -64,7 +108,7 @@ DB_SCHEMA = "test_db"
 # Amazon S3 Bucket Credentials
 # (For saving screenshots and other log files from tests)
 # (Bucket names are unique across all existing bucket names in Amazon S3)
-# Usage: "--with-s3_logging"
+# Usage: "--with-s3-logging"
 S3_LOG_BUCKET = "[S3 BUCKET NAME]"
 S3_BUCKET_URL = "https://s3.amazonaws.com/[S3 BUCKET NAME]/"
 S3_SELENIUM_ACCESS_KEY = "[S3 ACCESS KEY]"

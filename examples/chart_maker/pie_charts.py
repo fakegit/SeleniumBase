@@ -1,8 +1,8 @@
 from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 
 class PieCharts(BaseCase):
-
     def test_pie_charts(self):
         self.create_presentation(theme="serif", transition="convex")
 

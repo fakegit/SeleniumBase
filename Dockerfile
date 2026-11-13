@@ -1,98 +1,168 @@
-# SeleniumBase Docker Image
-FROM ubuntu:18.04
+#=====================================
+# SeleniumBase Dockerfile boilerplate
+# (Use this as a template for others)
+#=====================================
+FROM ubuntu:24.04
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONIOENCODING=UTF-8
+ENV DEBIAN_FRONTEND=noninteractive
 
-#=======================================
-# Install Python and Basic Python Tools
-#=======================================
-RUN apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update
-RUN apt-get install -y python3 python3-pip python3-setuptools python3-dev python-distribute
-RUN alias python=python3
-RUN echo "alias python=python3" >> ~/.bashrc
+#======================
+# Locale Configuration
+#======================
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends tzdata locales
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
+ENV TZ=America/New_York
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
+RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
+RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+RUN echo "LANG=en_US.UTF-8" > /etc/locale.conf
+RUN locale-gen en_US.UTF-8
+
+#===========================
+# Fingerprint Configuration
+#===========================
+RUN apt-get update
+RUN apt install -y fonts-noto-color-emoji libvulkan1 libnss3 libatk-bridge2.0-0 libcups2 libxcomposite1 libxrandr2 libgbm1 libpango-1.0-0 libcairo2
+RUN apt install -y fonts-freefont-ttf fonts-dejavu-core fonts-ubuntu fonts-roboto fonts-droid-fallback
+
+#======================
+# Install Common Fonts
+#======================
+RUN apt-get update
+RUN apt-get install -y \
+    fonts-clear-sans \
+    fonts-liberation2 \
+    fonts-font-awesome \
+    fonts-terminus \
+    fonts-powerline \
+    fonts-open-sans \
+    fonts-mononoki \
+    fonts-lato
+
+#============================
+# Install Linux Dependencies
+#============================
+RUN apt-get update
+RUN apt-get install -y \
+    dbus-x11 \
+    libatk1.0-0 \
+    libatspi2.0-0 \
+    libdbus-1-3 \
+    libdrm2 \
+    libgtk-3-0 \
+    libnspr4 \
+    libasound2t64 \
+    libu2f-udev \
+    libwayland-client0 \
+    libx11-6 \
+    libx11-xcb1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxkbcommon0
+
+#==========================
+# Install useful utilities
+#==========================
+RUN apt-get update
+RUN apt-get install -y xdg-utils ca-certificates x11vnc
 
 #=================================
 # Install Bash Command Line Tools
 #=================================
+RUN apt-get update
 RUN apt-get -qy --no-install-recommends install \
+    curl \
     sudo \
     unzip \
-    wget \
-    curl \
-    libxi6 \
-    libgconf-2-4 \
     vim \
-    xvfb \
-  && rm -rf /var/lib/apt/lists/*
+    wget \
+    xvfb
 
 #================
 # Install Chrome
 #================
-RUN curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get -yqq update && \
-    apt-get -yqq install google-chrome-stable && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN apt-get install -y ./google-chrome-stable_current_amd64.deb
+RUN rm ./google-chrome-stable_current_amd64.deb
 
-#=================
-# Install Firefox
-#=================
-RUN apt-get -qy --no-install-recommends install \
-     $(apt-cache depends firefox | grep Depends | sed "s/.*ends:\ //" | tr '\n' ' ') \
-  && rm -rf /var/lib/apt/lists/* \
-  && cd /tmp \
-  && wget --no-check-certificate -O firefox-esr.tar.bz2 \
-    'https://download.mozilla.org/?product=firefox-esr-latest&os=linux64&lang=en-US' \
-  && tar -xjf firefox-esr.tar.bz2 -C /opt/ \
-  && ln -s /opt/firefox/firefox /usr/bin/firefox \
-  && rm -f /tmp/firefox-esr.tar.bz2
-
-#===========================
-# Configure Virtual Display
-#===========================
-RUN set -e
-RUN echo "Starting X virtual framebuffer (Xvfb) in background..."
-RUN Xvfb -ac :99 -screen 0 1280x1024x16 > /dev/null 2>&1 &
-RUN export DISPLAY=:99
-RUN exec "$@"
-
-#=======================
-# Update Python Version
-#=======================
-RUN apt-get update -y
-RUN apt-get -qy --no-install-recommends install python3.8
+#================
+# Install Python
+#================
+RUN apt-get update && apt-get install -y software-properties-common
+RUN add-apt-repository ppa:deadsnakes/ppa -y
+RUN apt-get update
+RUN apt-get install -y python3.13 python3.13-venv python3.13-dev build-essential
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.13 1
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN python3.13 -m ensurepip --upgrade
+RUN python3.13 -m pip install --upgrade pip
+RUN apt-get update
+RUN apt-get install -y python3.13-tk python3.13-dev
+RUN alias python=python3
+RUN echo "alias python=python3" >> ~/.bashrc
 RUN rm /usr/bin/python3
-RUN ln -s python3.8 /usr/bin/python3
+RUN ln -s python3.13 /usr/bin/python3
 
-#=============================================
-# Allow Special Characters in Python Programs
-#=============================================
-RUN export PYTHONIOENCODING=utf8
-RUN echo "export PYTHONIOENCODING=utf8" >> ~/.bashrc
+#===============
+# Cleanup Lists
+#===============
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
 
 #=====================
 # Set up SeleniumBase
 #=====================
+COPY sbase /SeleniumBase/sbase/
 COPY seleniumbase /SeleniumBase/seleniumbase/
 COPY examples /SeleniumBase/examples/
 COPY integrations /SeleniumBase/integrations/
 COPY requirements.txt /SeleniumBase/requirements.txt
 COPY setup.py /SeleniumBase/setup.py
-RUN find -name '*.pyc' -delete
-RUN find -name __pycache__ -delete
-RUN pip3 install --upgrade pip
-RUN pip3 install --upgrade setuptools
-RUN pip3 install --upgrade setuptools-scm
-RUN cd /SeleniumBase && ls && pip3 install -r requirements.txt --upgrade
-RUN cd /SeleniumBase && python3 setup.py develop
-RUN seleniumbase install chromedriver
-RUN seleniumbase install geckodriver
+COPY MANIFEST.in /SeleniumBase/MANIFEST.in
+COPY pytest.ini /SeleniumBase/pytest.ini
+COPY setup.cfg /SeleniumBase/setup.cfg
+COPY virtualenv_install.sh /SeleniumBase/virtualenv_install.sh
+COPY mcp_servers /SeleniumBase/mcp_servers/
+COPY README.md /SeleniumBase/README.md
+COPY pyproject.toml /SeleniumBase/pyproject.toml
+COPY LICENSE /SeleniumBase/LICENSE
+RUN find . -name '*.pyc' -delete
+RUN echo '#!/bin/sh' > /usr/local/bin/pip \
+    && echo 'exec python3.13 -m pip "$@"' >> /usr/local/bin/pip \
+    && chmod +x /usr/local/bin/pip \
+    && pip --version
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
+RUN pip install --upgrade pip setuptools wheel
+RUN cd /SeleniumBase && ls && pip install -r requirements.txt --upgrade
+RUN cd /SeleniumBase && pip install .
+RUN pip install pyautogui
+RUN pip install playwright
+RUN seleniumbase get cft
+RUN seleniumbase get chromium
+
+#=======================
+# Download chromedriver
+#=======================
+RUN seleniumbase get chromedriver --path
+
+#==============
+# Extra config
+#==============
+ENV DISPLAY=":99"
+RUN Xvfb :99 -screen 1 1920x1080x16 -nolisten tcp &
 
 #==========================================
 # Create entrypoint and grab example tests
 #==========================================
 COPY integrations/docker/docker-entrypoint.sh /
-COPY integrations/docker/run_docker_test_in_firefox.sh /
 COPY integrations/docker/run_docker_test_in_chrome.sh /
 RUN chmod +x *.sh
-COPY integrations/docker/docker_config.cfg /SeleniumBase/examples/
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/bin/bash"]

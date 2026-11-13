@@ -1,24 +1,20 @@
-from seleniumbase import BaseCase
 from parameterized import parameterized
+from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 
-class GoogleTests(BaseCase):
-
-    @parameterized.expand([
-        ["PyPI", "pypi.org", 'img[alt="PyPI"]'],
-        ["Wikipedia", "wikipedia.org", "div#p-logo"],
-        ["SeleniumBase", "seleniumbase/SeleniumBase", 'img[title*="Selenium"]']
-    ])
-    def test_parameterized_google_search(self, search_key, expected_text, img):
-        self.open('https://google.com/ncr')
-        self.type('input[title="Search"]', search_key + '\n')
-        self.assert_element('#result-stats')
-        self.assert_text(expected_text, '#search')
-        self.click('a:contains("%s")' % expected_text)
-        self.assert_element(img)
-        self.click(img)
-        if "Selenium" in img:
-            self.click('img[alt="SeleniumBase.io Docs"]')
-            self.assert_element('[title="SeleniumBase Docs"]')
-            self.click('a:contains("Features List")')
-            self.assert_text("Features List", "h1")
+class SearchTests(BaseCase):
+    @parameterized.expand(
+        [
+            ["SeleniumBase Commander", "Commander", "GUI / Commander"],
+            ["SeleniumBase Recorder", "Recorder", "Recorder Mode"],
+            ["SeleniumBase Syntax", "Syntax", "Syntax Formats"],
+        ]
+    )
+    def test_parameterized_search(self, search_term, keyword, title_text):
+        self.goto("https://seleniumbase.io/help_docs/how_it_works/")
+        self.assert_title_contains("SeleniumBase Docs")
+        self.type('input[aria-label="Search"]', search_term)
+        self.click('mark:contains("%s")' % keyword)
+        self.assert_title_contains(title_text)
+        self.save_screenshot_to_logs()

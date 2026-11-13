@@ -8,19 +8,19 @@ jobs:
 
 - job: 'Test'
   pool:
-    vmImage: 'Ubuntu-20.04'
+    vmImage: 'Ubuntu-22.04'
   strategy:
     matrix:
-      Python3.5:
-        python.version: '3.5'
-      Python3.6:
-        python.version: '3.6'
-      Python3.7:
+      Python3_7:
         python.version: '3.7'
-      Python3.8:
+      Python3_8:
         python.version: '3.8'
-      Python3.9:
+      Python3_9:
         python.version: '3.9'
+      Python3_10:
+        python.version: '3.10'
+      Python3_11:
+        python.version: '3.11'
     maxParallel: 5
 
   steps:
@@ -81,16 +81,16 @@ jobs:
   #- script: python -m pytest examples/test_inspect_html.py --browser=chrome --headless -v -s --junit-xml=junit/test-results.xml
   #  displayName: 'Run pytest test_inspect_html.py --browser=chrome --headless'
 
-  #- task: PublishTestResults@2
-  #  inputs:
-  #    testResultsFiles: '**/test-results.xml'
-  #    testRunTitle: 'Python $(python.version)'
-  #  condition: succeededOrFailed()
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFiles: '**/test-results.xml'
+      testRunTitle: 'Python $(python.version)'
+    condition: succeededOrFailed()
 
 #- job: 'Publish'
 #  dependsOn: 'Test'
 #  pool:
-#    vmImage: 'Ubuntu-18.04'
+#    vmImage: 'Ubuntu-22.04'
 
 #  steps:
 #  - task: UsePythonVersion@0

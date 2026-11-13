@@ -15,15 +15,15 @@ Format of PROXY_LIST server entries:
 Example proxies in PROXY_LIST below are not guaranteed to be active or secure.
 If you don't already have a proxy server to connect to,
 you can try finding one from one of following sites:
-* https://bit.ly/36GtZa1
+* https://www.sslproxies.org/
 * https://www.us-proxy.org/
 * https://hidemy.name/en/proxy-list/
-* http://free-proxy.cz/en/proxylist/country/all/https/ping/all
 """
 
 PROXY_LIST = {
-    "example1": "152.179.12.86:3128",  # (Example) - set your own proxy here
-    "example2": "socks4://50.197.210.138:32100",  # (Example)
+    "example1": "65.109.191.98:3080",  # (Example) - set your own proxy here
+    "example2": "157.254.194.57:1080",  # (Example)
+    "example3": "socks4://142.54.228.193:4145",  # (Example)
     "proxy1": None,
     "proxy2": None,
     "proxy3": None,

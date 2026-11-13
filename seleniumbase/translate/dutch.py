@@ -1,12 +1,11 @@
-# Dutch / Nederlands - Translations - Python 3 Only!
+# Dutch / Nederlands - Translations
 from seleniumbase import BaseCase
 from seleniumbase import MasterQA
 
 
 class Testgeval(BaseCase):
-
     def __init__(self, *args, **kwargs):
-        super(Testgeval, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._language = "Dutch"
 
     def openen(self, *args, **kwargs):
@@ -25,6 +24,10 @@ class Testgeval(BaseCase):
         # double_click(selector)
         return self.double_click(*args, **kwargs)
 
+    def contextklik(self, *args, **kwargs):
+        # context_click(selector)
+        return self.context_click(*args, **kwargs)
+
     def klik_langzaam(self, *args, **kwargs):
         # slow_click(selector)
         return self.slow_click(*args, **kwargs)
@@ -33,9 +36,18 @@ class Testgeval(BaseCase):
         # click_if_visible(selector, by=By.CSS_SELECTOR)
         return self.click_if_visible(*args, **kwargs)
 
+    def js_klik_indien_aanwezig(self, *args, **kwargs):
+        # js_click_if_present(selector, by=By.CSS_SELECTOR)
+        return self.js_click_if_present(*args, **kwargs)
+
     def klik_linktekst(self, *args, **kwargs):
         # click_link_text(link_text)
         return self.click_link_text(*args, **kwargs)
+
+    def klik_op_locatie(self, *args, **kwargs):
+        # click_with_offset(selector, x, y, by=By.CSS_SELECTOR,
+        #                   mark=None, timeout=None, center=None)
+        return self.click_with_offset(*args, **kwargs)
 
     def tekst_bijwerken(self, *args, **kwargs):
         # update_text(selector, text)
@@ -65,6 +77,14 @@ class Testgeval(BaseCase):
         # assert_link_text(link_text)
         return self.assert_link_text(*args, **kwargs)
 
+    def controleren_niet_lege_tekst(self, *args, **kwargs):
+        # assert_non_empty_text(selector)
+        return self.assert_non_empty_text(*args, **kwargs)
+
+    def controleren_tekst_niet_zichtbaar(self, *args, **kwargs):
+        # assert_text_not_visible(text, selector)
+        return self.assert_text_not_visible(*args, **kwargs)
+
     def controleren_element(self, *args, **kwargs):
         # assert_element(selector)
         return self.assert_element(*args, **kwargs)
@@ -85,9 +105,25 @@ class Testgeval(BaseCase):
         # assert_element_absent(selector)
         return self.assert_element_absent(*args, **kwargs)
 
+    def controleren_attribuut(self, *args, **kwargs):
+        # assert_attribute(selector, attribute, value)
+        return self.assert_attribute(*args, **kwargs)
+
+    def controleren_url(self, *args, **kwargs):
+        # assert_url(url)
+        return self.assert_url(*args, **kwargs)
+
+    def controleren_url_bevat(self, *args, **kwargs):
+        # assert_url_contains(substring)
+        return self.assert_url_contains(*args, **kwargs)
+
     def controleren_titel(self, *args, **kwargs):
         # assert_title(title)
         return self.assert_title(*args, **kwargs)
+
+    def controleren_titel_bevat(self, *args, **kwargs):
+        # assert_title_contains(substring)
+        return self.assert_title_contains(*args, **kwargs)
 
     def titel_ophalen(self, *args, **kwargs):
         # get_title()
@@ -133,6 +169,10 @@ class Testgeval(BaseCase):
         # is_text_visible(text, selector="html")
         return self.is_text_visible(*args, **kwargs)
 
+    def exacte_tekst_zichtbaar(self, *args, **kwargs):
+        # is_exact_text_visible(text, selector="html")
+        return self.is_exact_text_visible(*args, **kwargs)
+
     def element_zichtbaar(self, *args, **kwargs):
         # is_element_visible(selector)
         return self.is_element_visible(*args, **kwargs)
@@ -169,6 +209,14 @@ class Testgeval(BaseCase):
         # wait_for_element_absent(selector)
         return self.wait_for_element_absent(*args, **kwargs)
 
+    def wachten_op_attribuut(self, *args, **kwargs):
+        # wait_for_attribute(selector, attribute, value)
+        return self.wait_for_attribute(*args, **kwargs)
+
+    def wacht_tot_de_pagina_is_geladen(self, *args, **kwargs):
+        # wait_for_ready_state_complete()
+        return self.wait_for_ready_state_complete(*args, **kwargs)
+
     def slapen(self, *args, **kwargs):
         # sleep(seconds)
         return self.sleep(*args, **kwargs)
@@ -201,6 +249,18 @@ class Testgeval(BaseCase):
         # js_type(selector, text)
         return self.js_type(*args, **kwargs)
 
+    def jquery_klik(self, *args, **kwargs):
+        # jquery_click(selector)
+        return self.jquery_click(*args, **kwargs)
+
+    def jquery_tekst_bijwerken(self, *args, **kwargs):
+        # jquery_update_text(selector, text)
+        return self.jquery_update_text(*args, **kwargs)
+
+    def jquery_typ(self, *args, **kwargs):
+        # jquery_type(selector, text)
+        return self.jquery_type(*args, **kwargs)
+
     def html_inspecteren(self, *args, **kwargs):
         # inspect_html()
         return self.inspect_html(*args, **kwargs)
@@ -208,6 +268,10 @@ class Testgeval(BaseCase):
     def bewaar_screenshot(self, *args, **kwargs):
         # save_screenshot(name)
         return self.save_screenshot(*args, **kwargs)
+
+    def bewaar_screenshot_om_te_loggen(self, *args, **kwargs):
+        # save_screenshot_to_logs(name)
+        return self.save_screenshot_to_logs(*args, **kwargs)
 
     def selecteer_bestand(self, *args, **kwargs):
         # choose_file(selector, file_path)
@@ -224,6 +288,14 @@ class Testgeval(BaseCase):
     def activeer_jquery(self, *args, **kwargs):
         # activate_jquery()
         return self.activate_jquery(*args, **kwargs)
+
+    def activeer_recorder(self, *args, **kwargs):
+        # activate_recorder()
+        return self.activate_recorder(*args, **kwargs)
+
+    def openen_zo_niet_url(self, *args, **kwargs):
+        # open_if_not_url(url)
+        return self.open_if_not_url(*args, **kwargs)
 
     def blokkeer_advertenties(self, *args, **kwargs):
         # ad_block()
@@ -248,6 +320,10 @@ class Testgeval(BaseCase):
     def overschakelen_naar_standaardcontent(self, *args, **kwargs):
         # switch_to_default_content()
         return self.switch_to_default_content(*args, **kwargs)
+
+    def overschakelen_naar_bovenliggend_frame(self, *args, **kwargs):
+        # switch_to_parent_frame()
+        return self.switch_to_parent_frame(*args, **kwargs)
 
     def nieuw_venster_openen(self, *args, **kwargs):
         # open_new_window()
@@ -292,6 +368,10 @@ class Testgeval(BaseCase):
     def zweven_en_klik(self, *args, **kwargs):
         # hover_and_click(hover_selector, click_selector)
         return self.hover_and_click(*args, **kwargs)
+
+    def zweven(self, *args, **kwargs):
+        # hover(selector)
+        return self.hover(*args, **kwargs)
 
     def is_het_geselecteerd(self, *args, **kwargs):
         # is_selected(selector)
@@ -440,9 +520,25 @@ class Testgeval(BaseCase):
         #                 codec='utf-8', wrap=True, nav=False, override=False)
         return self.assert_pdf_text(*args, **kwargs)
 
+    def bestand_downloaden(self, *args, **kwargs):
+        # download_file(file)
+        return self.download_file(*args, **kwargs)
+
+    def gedownloade_bestand_aanwezig(self, *args, **kwargs):
+        # is_downloaded_file_present(file)
+        return self.is_downloaded_file_present(*args, **kwargs)
+
+    def pad_gedownloade_bestand_ophalen(self, *args, **kwargs):
+        # get_path_of_downloaded_file(file)
+        return self.get_path_of_downloaded_file(*args, **kwargs)
+
     def controleren_gedownloade_bestand(self, *args, **kwargs):
         # assert_downloaded_file(file)
         return self.assert_downloaded_file(*args, **kwargs)
+
+    def verwijder_gedownloade_bestand(self, *args, **kwargs):
+        # delete_downloaded_file(file)
+        return self.delete_downloaded_file(*args, **kwargs)
 
     def mislukken(self, *args, **kwargs):
         # fail(msg=None)  # Inherited from "unittest"
@@ -484,15 +580,15 @@ class Testgeval(BaseCase):
         # set_text(selector, text)
         return self.set_text(*args, **kwargs)
 
-    def kenmerk_ophalen(self, *args, **kwargs):
+    def attribuut_ophalen(self, *args, **kwargs):
         # get_attribute(selector, attribute)
         return self.get_attribute(*args, **kwargs)
 
-    def kenmerk_instellen(self, *args, **kwargs):
+    def attribuut_instellen(self, *args, **kwargs):
         # set_attribute(selector, attribute, value)
         return self.set_attribute(*args, **kwargs)
 
-    def kenmerken_instellen(self, *args, **kwargs):
+    def attributen_instellen(self, *args, **kwargs):
         # set_attributes(selector, attribute, value)
         return self.set_attributes(*args, **kwargs)
 
@@ -566,7 +662,6 @@ class Testgeval(BaseCase):
 
 
 class MasterQA_Nederlands(MasterQA, Testgeval):
-
     def controleren(self, *args, **kwargs):
         # "Manual Check"
         self.DEFAULT_VALIDATION_TITLE = "Handmatige controle"

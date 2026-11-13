@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Creates a new folder for running SeleniumBase scripts.
 
@@ -11,6 +10,7 @@ Example:
 
 Options:
     -b / --basic  (Only config files. No tests added.)
+    --gha  (Include GitHub Actions YML with defaults.)
 
 Output:
     Creates a new folder for running SBase scripts.
@@ -19,35 +19,35 @@ Output:
     and Python boilerplates for setting up customized
     test frameworks.
 """
-
-import codecs
 import colorama
 import os
+import subprocess
 import sys
 
 
 def invalid_run_command(msg=None):
-    exp = ("  ** mkdir **\n\n")
+    exp = "  ** mkdir **\n\n"
     exp += "  Usage:\n"
-    exp += "          seleniumbase mkdir [DIRECTORY] [OPTIONS]\n"
-    exp += "          OR     sbase mkdir [DIRECTORY] [OPTIONS]\n"
+    exp += "     seleniumbase mkdir [DIRECTORY] [OPTIONS]\n"
+    exp += "     OR     sbase mkdir [DIRECTORY] [OPTIONS]\n"
     exp += "  Example:\n"
-    exp += "          sbase mkdir ui_tests\n"
+    exp += "     sbase mkdir ui_tests\n"
     exp += "  Options:\n"
-    exp += "          -b / --basic  (Only config files. No tests added.)\n"
+    exp += "     -b / --basic  (Only config files. No tests added.)\n"
+    exp += "     --gha  (Include GitHub Actions YML with defaults.)\n"
     exp += "  Output:\n"
-    exp += "          Creates a new folder for running SBase scripts.\n"
-    exp += "          The new folder contains default config files,\n"
-    exp += "          sample tests for helping new users get started,\n"
-    exp += "          and Python boilerplates for setting up customized\n"
-    exp += "          test frameworks.\n"
+    exp += "     Creates a new folder for running SBase scripts.\n"
+    exp += "     The new folder contains default config files,\n"
+    exp += "     sample tests for helping new users get started,\n"
+    exp += "     and Python boilerplates for setting up customized\n"
+    exp += "     test frameworks.\n"
     if not msg:
-        raise Exception('INVALID RUN COMMAND!\n\n%s' % exp)
+        raise Exception("INVALID RUN COMMAND!\n\n%s" % exp)
     elif msg == "help":
         print("\n%s" % exp)
         sys.exit()
     else:
-        raise Exception('INVALID RUN COMMAND!\n\n%s\n%s\n' % (exp, msg))
+        raise Exception("INVALID RUN COMMAND!\n\n%s\n%s\n" % (exp, msg))
 
 
 def main():
@@ -56,12 +56,12 @@ def main():
     c7 = ""
     cr = ""
     if "linux" not in sys.platform:
-        colorama.init(autoreset=True)
         c1 = colorama.Fore.BLUE + colorama.Back.LIGHTCYAN_EX
         c5 = colorama.Fore.RED + colorama.Back.LIGHTYELLOW_EX
         c7 = colorama.Fore.BLACK + colorama.Back.MAGENTA
         cr = colorama.Style.RESET_ALL
 
+    gha = False
     basic = False
     help_me = False
     error_msg = None
@@ -69,19 +69,20 @@ def main():
 
     command_args = sys.argv[2:]
     dir_name = command_args[0]
+    if dir_name:
+        dir_name = str(dir_name)
     if dir_name == "-h" or dir_name == "--help":
         invalid_run_command("help")
-    elif len(str(dir_name)) < 2:
-        error_msg = (
-            'Directory name length must be at least 2 characters long!')
-    elif "/" in str(dir_name) or "\\" in str(dir_name):
-        error_msg = (
-            'Directory name must not include slashes ("/", "\\")!')
+    elif len(dir_name) < 2:
+        error_msg = "Directory name length must be at least 2 characters long!"
+    elif any(sep in dir_name for sep in ("/", "\\")):
+        error_msg = 'Directory name must not include slashes ("/", "\\")!'
     elif dir_name.startswith("-"):
         error_msg = 'Directory name cannot start with "-"!'
-    elif os.path.exists(os.getcwd() + '/' + dir_name):
+    elif os.path.exists(os.path.join(os.getcwd(), dir_name)):
         error_msg = (
-            'Directory "%s" already exists in this directory!' % dir_name)
+            'Directory "%s" already exists in this directory!' % dir_name
+        )
     if error_msg:
         error_msg = c5 + "ERROR: " + error_msg + cr
         invalid_run_command(error_msg)
@@ -94,12 +95,14 @@ def main():
                 help_me = True
             elif option == "-b" or option == "--basic":
                 basic = True
+            elif option == "--gha":
+                gha = True
             else:
                 invalid_cmd = "\n===> INVALID OPTION: >> %s <<\n" % option
-                invalid_cmd = invalid_cmd.replace('>> ', ">>" + c5 + " ")
-                invalid_cmd = invalid_cmd.replace(' <<', " " + cr + "<<")
-                invalid_cmd = invalid_cmd.replace('>>', c7 + ">>" + cr)
-                invalid_cmd = invalid_cmd.replace('<<', c7 + "<<" + cr)
+                invalid_cmd = invalid_cmd.replace(">> ", ">>" + c5 + " ")
+                invalid_cmd = invalid_cmd.replace(" <<", " " + cr + "<<")
+                invalid_cmd = invalid_cmd.replace(">>", c7 + ">>" + cr)
+                invalid_cmd = invalid_cmd.replace("<<", c7 + "<<" + cr)
                 help_me = True
                 break
     if help_me:
@@ -111,19 +114,21 @@ def main():
     seleniumbase_req = "seleniumbase"
     try:
         from seleniumbase import __version__
+
         seleniumbase_req = "seleniumbase>=%s" % str(__version__)
     except Exception:
         pass
     data.append(seleniumbase_req)
     data.append("")
-    file_path = "%s/%s" % (dir_name, "requirements.txt")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name, "requirements.txt")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
     data.append("[pytest]")
-    data.append("addopts = --capture=no -p no:cacheprovider")
+    data.append("addopts = --capture=tee-sys -p no:cacheprovider")
+    data.append("norecursedirs = .* build dist recordings temp assets")
     data.append("filterwarnings =")
     data.append("    ignore::pytest.PytestWarning")
     data.append("    ignore:.*U.*mode is deprecated:DeprecationWarning")
@@ -153,27 +158,32 @@ def main():
     data.append("    staging: custom marker")
     data.append("    production: custom marker")
     data.append("")
-    file_path = "%s/%s" % (dir_name, "pytest.ini")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name, "pytest.ini")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
+    data.append("[flake8]")
+    data.append("exclude=recordings,temp")
+    data.append("ignore=W503")
+    data.append("")
     data.append("[nosetests]")
     data.append("nocapture=1")
     data.append("logging-level=INFO")
     data.append("")
-    data.append("[bdist_wheel]")
-    data.append("universal=1")
-    file_path = "%s/%s" % (dir_name, "setup.cfg")
-    file = codecs.open(file_path, "w+", "utf-8")
+    data.append("[behave]")
+    data.append("show_skipped=false")
+    data.append("show_timings=false")
+    file_path = os.path.join(dir_name, "setup.cfg")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
     data.append("")
-    file_path = "%s/%s" % (dir_name, "__init__.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name, "__init__.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
@@ -183,7 +193,7 @@ def main():
     data.append("*.egg-info")
     data.append("dist")
     data.append("build")
-    data.append("ghostdriver.log")
+    data.append(".eggs")
     data.append("eggs")
     data.append("parts")
     data.append("bin")
@@ -202,8 +212,8 @@ def main():
     data.append("VENV/")
     data.append("env.bak/")
     data.append("venv.bak/")
-    data.append("sbase")
-    data.append("sbase*")
+    data.append(".sbase")
+    data.append(".sbase*")
     data.append("seleniumbase_env")
     data.append("seleniumbase_venv")
     data.append("sbase_env")
@@ -215,6 +225,7 @@ def main():
     data.append("pip-selfcheck.json")
     data.append("ipython.1.gz")
     data.append("nosetests.1")
+    data.append(".noseids")
     data.append("pip-log.txt")
     data.append(".swp")
     data.append(".coverage")
@@ -234,22 +245,55 @@ def main():
     data.append("geckodriver")
     data.append("msedgedriver")
     data.append("operadriver")
+    data.append("uc_driver")
     data.append("MicrosoftWebDriver.exe")
+    data.append("headless_ie_selenium.exe")
     data.append("IEDriverServer.exe")
     data.append("chromedriver.exe")
     data.append("geckodriver.exe")
     data.append("msedgedriver.exe")
     data.append("operadriver.exe")
+    data.append("uc_driver.exe")
+    data.append("chrome-mac.zip")
+    data.append("chrome-linux.zip")
+    data.append("chrome-win.zip")
+    data.append("chrome-mac")
+    data.append("chrome-linux")
+    data.append("chrome-win")
+    data.append("chrome-mac-arm64.zip")
+    data.append("chrome-mac-x64.zip")
+    data.append("chrome-linux64.zip")
+    data.append("chrome-win64.zip")
+    data.append("chrome-win32.zip")
+    data.append("chrome-mac-arm64")
+    data.append("chrome-mac-x64")
+    data.append("chrome-linux64")
+    data.append("chrome-win64")
+    data.append("chrome-win32")
+    data.append("chrome-headless-shell-mac-arm64.zip")
+    data.append("chrome-headless-shell-mac-x64.zip")
+    data.append("chrome-headless-shell-linux64.zip")
+    data.append("chrome-headless-shell-win64.zip")
+    data.append("chrome-headless-shell-win32.zip")
+    data.append("chrome-headless-shell-mac-arm64")
+    data.append("chrome-headless-shell-mac-x64")
+    data.append("chrome-headless-shell-linux64")
+    data.append("chrome-headless-shell-win64")
+    data.append("chrome-headless-shell-win32")
+    data.append("libc++.dylib")
     data.append("logs")
     data.append("latest_logs")
     data.append("log_archives")
     data.append("archived_logs")
     data.append("geckodriver.log")
+    data.append("ghostdriver.log")
     data.append("pytestdebug.log")
+    data.append("reports/*.xml")
     data.append("latest_report")
     data.append("report_archives")
     data.append("archived_reports")
     data.append("html_report.html")
+    data.append("last_report.html")
     data.append("report.html")
     data.append("report.xml")
     data.append("dashboard.html")
@@ -265,7 +309,9 @@ def main():
     data.append("tours_exported")
     data.append("images_exported")
     data.append("saved_cookies")
+    data.append("recordings")
     data.append("visual_baseline")
+    data.append(".DS_Store")
     data.append("selenium-server-standalone.jar")
     data.append("proxy.zip")
     data.append("proxy.lock")
@@ -278,60 +324,156 @@ def main():
     data.append("temp")
     data.append("temp_*/")
     data.append("node_modules")
-    file_path = "%s/%s" % (dir_name, ".gitignore")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name, ".gitignore")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
+    if gha:
+        dir_name_b = os.path.join(dir_name, ".github")
+        os.mkdir(dir_name_b)
+        dir_name_c = os.path.join(dir_name_b, "workflows")
+        os.mkdir(dir_name_c)
+
+        data = []
+        data.append("name: CI build")
+        data.append("on:")
+        data.append("  push:")
+        data.append("    branches:")
+        data.append("  pull_request:")
+        data.append("    branches:")
+        data.append("  workflow_dispatch:")
+        data.append("    branches:")
+        data.append("jobs:")
+        data.append("  build:")
+        data.append("    env:")
+        data.append('      PY_COLORS: "1"')
+        data.append("    strategy:")
+        data.append("      fail-fast: false")
+        data.append("      max-parallel: 15")
+        data.append("      matrix:")
+        data.append("        os: [ubuntu-latest]")
+        data.append('        python-version: ["3.x"]')
+        data.append("    runs-on: ${{ matrix.os }}")
+        data.append("    steps:")
+        data.append("    - uses: actions/checkout@v6")
+        data.append("    - name: Set up Python ${{ matrix.python-version }}")
+        data.append("      uses: actions/setup-python@v6")
+        data.append("      with:")
+        data.append("        python-version: ${{ matrix.python-version }}")
+        data.append("    - name: Install dependencies")
+        data.append("      run: |")
+        data.append("        python -m pip install --upgrade pip")
+        data.append("        pip install -r requirements.txt")
+        data.append("    - name: Install Chrome")
+        data.append("      if: matrix.os == 'ubuntu-latest'")
+        data.append("      run: sudo apt install google-chrome-stable")
+        data.append("    - name: Download chromedriver")
+        data.append("      run: sbase get chromedriver")
+        data.append("    - name: Run pytest")
+        data.append("      run: pytest -v -s --rs --crumbs --reruns=1")
+        data.append("    - name: Upload artifacts")
+        data.append("      if: ${{ always() }}")
+        data.append("      uses: actions/upload-artifact@v6")
+        data.append("      with:")
+        data.append("        name: seleniumbase-artifacts")
+        data.append("        path: ./latest_logs/")
+        data.append("        if-no-files-found: ignore")
+        data.append("")
+        file_path = os.path.join(dir_name_c, "python-package.yml")
+        file = open(file_path, mode="w+", encoding="utf-8")
+        file.writelines("\r\n".join(data))
+        file.close()
+
     if basic:
+        data = []
+        data.append("  %s/" % dir_name)
+        if gha:
+            data.append("  ├── .github")
+            data.append("  │   └── workflows/")
+            data.append("  │      └── python-package.yml")
+        data.append("  ├── __init__.py")
+        data.append("  ├── pytest.ini")
+        data.append("  ├── requirements.txt")
+        data.append("  └── setup.cfg")
+        file_path = os.path.join(dir_name, "outline.rst")
+        file = open(file_path, mode="w+", encoding="utf-8")
+        file.writelines("\r\n".join(data))
+        file.close()
+
+        subprocess.run(["sbase", "print", file_path, "-n"])
+        os.remove(file_path)
+
         success = (
-            '\n' + c1 + '* Directory "' + dir_name + '" was created '
-            'with config files! *' + cr + '\n')
+            "\n" + c1 + '* Directory "' + dir_name + '" was created '
+            "with config files! *" + cr + "\n"
+        )
         print(success)
         return
 
     data = []
     data.append("from seleniumbase import BaseCase")
+    data.append("BaseCase.main(__name__, __file__)")
     data.append("")
     data.append("")
     data.append("class MyTestClass(BaseCase):")
+    data.append("    def test_swag_labs(self):")
+    data.append('        self.goto("https://www.saucedemo.com")')
+    data.append('        self.type("#user-name", "standard_user")')
+    data.append('        self.type("#password", "secret_sauce\\n")')
+    data.append('        self.assert_element("div.inventory_list")')
+    data.append('        self.assert_text("Products", "span.title")')
+    data.append("        self.click('button[name*=\"backpack\"]')")
+    data.append('        self.click("#shopping_cart_container a")')
+    data.append('        self.assert_text("Your Cart", "span.title")')
+    data.append('        self.assert_text("Backpack", "div.cart_item")')
+    data.append('        self.click("button#checkout")')
+    data.append('        self.type("#first-name", "SeleniumBase")')
+    data.append('        self.type("#last-name", "Automation")')
+    data.append('        self.type("#postal-code", "77123")')
+    data.append('        self.click("input#continue")')
+    data.append('        self.assert_text("Checkout: Overview")')
+    data.append('        self.assert_text("Backpack", "div.cart_item")')
+    data.append('        self.click("button#finish")')
+    data.append(
+        '        self.assert_exact_text("Thank you for your order!", "h2")'
+    )
+    data.append("        self.assert_element('img[alt=\"Pony Express\"]')")
+    data.append('        self.js_click("a#logout_sidebar_link")')
+    data.append('        self.assert_element("div#login_button_container")')
     data.append("")
-    data.append("    def test_basics(self):")
-    data.append('        url = "https://store.xkcd.com/collections/posters"')
-    data.append("        self.open(url)")
-    data.append("        self.type('input[name=\"q\"]', \"xkcd book\")")
-    data.append("        self.click('input[value=\"Search\"]')")
-    data.append('        self.assert_text("xkcd: volume 0", "h3")')
-    data.append('        self.open("https://xkcd.com/353/")')
-    data.append('        self.assert_title("xkcd: Python")')
-    data.append("        self.assert_element('img[alt=\"Python\"]')")
-    data.append("        self.click('a[rel=\"license\"]')")
-    data.append('        self.assert_text("free to copy and reuse")')
-    data.append('        self.go_back()')
-    data.append('        self.click_link("About")')
-    data.append('        self.assert_exact_text("xkcd.com", "h2")')
-    data.append("")
-    file_path = "%s/%s" % (dir_name, "my_first_test.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name, "my_first_test.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
     data.append("from seleniumbase import BaseCase")
+    data.append("BaseCase.main(__name__, __file__)")
     data.append("")
     data.append("")
     data.append("class DemoSiteTests(BaseCase):")
-    data.append("")
     data.append("    def test_demo_site(self):")
-    data.append('        self.open("https://seleniumbase.io/demo_page.html")')
+    data.append('        self.goto("https://seleniumbase.io/demo_page.html")')
     data.append('        self.assert_title("Web Testing Page")')
     data.append('        self.assert_element("tbody#tbodyId")')
     data.append('        self.assert_text("Demo Page", "h1")')
     data.append('        self.type("#myTextInput", "This is Automated")')
     data.append('        self.type("textarea.area1", "Testing Time!\\n")')
-    data.append("        self.type('[name=\"preText2\"]', \"Typing Text!\")")
+    data.append('        self.type(\'[name="preText2"]\', "Typing Text!")')
+    data.append(
+        '        self.assert_text("This is Automated", "#myTextInput")'
+    )
+    data.append(
+        '        self.assert_text("Testing Time!\\n", "textarea.area1")'
+    )
+    data.append(
+        '        self.assert_text("Typing Text!", \'[name="preText2"]\')'
+    )
     data.append('        self.assert_text("Automation Practice", "h3")')
-    data.append('        self.hover_and_click("#myDropdown", "#dropOption2")')
+    data.append(
+        '        self.hover_and_js_click("#myDropdown", "#dropOption2")'
+    )
     data.append('        self.assert_text("Link Two Selected", "h3")')
     data.append('        self.assert_text("This Text is Green", "#pText")')
     data.append('        self.click("#myButton")')
@@ -341,19 +483,22 @@ def main():
     data.append('        self.press_right_arrow("#myslider", times=5)')
     data.append("        self.assert_element('progress[value=\"100\"]')")
     data.append("        self.assert_element('meter[value=\"0.25\"]')")
-    data.append('        self.select_option_by_text("#mySelect", '
-                '"Set to 75%")')
+    data.append(
+        '        self.select_option_by_text("#mySelect", "Set to 75%")'
+    )
     data.append("        self.assert_element('meter[value=\"0.75\"]')")
     data.append('        self.assert_false(self.is_element_visible("img"))')
     data.append('        self.switch_to_frame("#myFrame1")')
     data.append('        self.assert_true(self.is_element_visible("img"))')
-    data.append('        self.switch_to_default_content()')
-    data.append('        self.assert_false(self.is_text_visible('
-                '"iFrame Text"))')
+    data.append("        self.switch_to_default_content()")
+    data.append(
+        '        self.assert_false(self.is_text_visible("iFrame Text"))'
+    )
     data.append('        self.switch_to_frame("#myFrame2")')
-    data.append('        self.assert_true(self.is_text_visible('
-                '"iFrame Text"))')
-    data.append('        self.switch_to_default_content()')
+    data.append(
+        '        self.assert_true(self.is_text_visible("iFrame Text"))'
+    )
+    data.append("        self.switch_to_default_content()")
     data.append('        self.assert_false(self.is_selected("#radioButton2"))')
     data.append('        self.click("#radioButton2")')
     data.append('        self.assert_true(self.is_selected("#radioButton2"))')
@@ -373,65 +518,86 @@ def main():
     data.append('        self.assert_false(self.is_selected(".fBox"))')
     data.append('        self.click(".fBox")')
     data.append('        self.assert_true(self.is_selected(".fBox"))')
-    data.append('        self.switch_to_default_content()')
+    data.append("        self.switch_to_default_content()")
+    data.append(
+        '        self.assert_element_not_visible("div#drop2 img#logo")'
+    )
+    data.append('        self.drag_and_drop("img#logo", "div#drop2")')
+    data.append('        self.assert_element("div#drop2 img#logo")')
     data.append('        self.assert_link_text("seleniumbase.com")')
     data.append('        self.assert_link_text("SeleniumBase on GitHub")')
     data.append('        self.assert_link_text("seleniumbase.io")')
     data.append('        self.click_link("SeleniumBase Demo Page")')
     data.append('        self.assert_exact_text("Demo Page", "h1")')
     data.append('        self.highlight("h2")')
+    data.append('        if self.headed:')
+    data.append("            self.activate_demo_mode()")
+    data.append('        self.type("input", "Have a Nice Day!")')
+    data.append('        self.assert_text("SeleniumBase", "h2")')
     data.append("")
-    file_path = "%s/%s" % (dir_name, "test_demo_site.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name, "test_demo_site.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
-    data.append("from seleniumbase import BaseCase")
     data.append("from parameterized import parameterized")
+    data.append("from seleniumbase import BaseCase")
+    data.append("BaseCase.main(__name__, __file__)")
     data.append("")
     data.append("")
-    data.append("class GoogleTests(BaseCase):")
+    data.append("class SearchTests(BaseCase):")
+    data.append("    @parameterized.expand(")
+    data.append("        [")
+    data.append(
+        "            "
+        '["SeleniumBase Commander", "Commander", "GUI / Commander"],'
+    )
+    data.append(
+        '            ["SeleniumBase Recorder", "Recorder", "Recorder Mode"],'
+    )
+    data.append(
+        '            ["SeleniumBase Syntax", "Syntax", "Syntax Formats"],'
+    )
+    data.append("        ]")
+    data.append("    )")
+    data.append(
+        "    def test_parameterized_search("
+        "self, search_term, keyword, title_text):"
+    )
+    data.append(
+        '        self.goto("https://seleniumbase.io/help_docs/how_it_works/")'
+    )
+    data.append(
+        '        self.type(\'[aria-label="Search"]\', search_term)'
+    )
+    data.append('        self.click(\'mark:contains("%s")\' % keyword)')
+    data.append('        self.assert_title_contains(title_text)')
+    data.append('        self.save_screenshot_to_logs()')
     data.append("")
-    data.append("    @parameterized.expand([")
-    data.append('        ["pypi", "pypi.org"],')
-    data.append('        ["wikipedia", "wikipedia.org"],')
-    data.append('        ["seleniumbase", "seleniumbase/SeleniumBase"],')
-    data.append("    ])")
-    data.append("    def test_parameterized_google_search("
-                "self, search_term, expected_text):")
-    data.append("        self.open('https://google.com/ncr')")
-    data.append("        self.type('input[title=\"Search\"]', "
-                "search_term + '\\n')")
-    data.append("        self.assert_element('#result-stats')")
-    data.append("        self.assert_text(expected_text, '#search')")
-    data.append("")
-    file_path = "%s/%s" % (dir_name, "parameterized_test.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name, "parameterized_test.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
-    dir_name_2 = dir_name + "/" + "boilerplates"
+    dir_name_2 = os.path.join(dir_name, "boilerplates")
     os.mkdir(dir_name_2)
 
     data = []
     data.append("")
-    file_path = "%s/%s" % (dir_name_2, "__init__.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name_2, "__init__.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
     data.append("from seleniumbase import BaseCase")
+    data.append("BaseCase.main(__name__, __file__)")
     data.append("")
     data.append("")
     data.append("class BaseTestCase(BaseCase):")
-    data.append("")
     data.append("    def setUp(self):")
-    if sys.version_info[0] >= 3:
-        data.append("        super().setUp()")
-    else:
-        data.append("        super(BaseTestCase, self).setUp()")
+    data.append("        super().setUp()")
     data.append("        # <<< Run custom code AFTER the super() line >>>")
     data.append("")
     data.append("    def tearDown(self):")
@@ -444,10 +610,7 @@ def main():
     data.append("            pass")
     data.append("        # (Wrap unreliable code in a try/except block.)")
     data.append("        # <<< Run custom code BEFORE the super() line >>>")
-    if sys.version_info[0] >= 3:
-        data.append("        super().tearDown()")
-    else:
-        data.append("        super(BaseTestCase, self).tearDown()")
+    data.append("        super().tearDown()")
     data.append("")
     data.append("    def login(self):")
     data.append("        # <<< Placeholder. Add your code here. >>>")
@@ -457,8 +620,8 @@ def main():
     data.append("        # <<< Placeholder. Add your code here. >>>")
     data.append("        pass")
     data.append("")
-    file_path = "%s/%s" % (dir_name_2, "base_test_case.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name_2, "base_test_case.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
@@ -466,8 +629,8 @@ def main():
     data.append("class Page(object):")
     data.append('    html = "html"')
     data.append("")
-    file_path = "%s/%s" % (dir_name_2, "page_objects.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name_2, "page_objects.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
@@ -477,171 +640,218 @@ def main():
     data.append("")
     data.append("")
     data.append("class MyTestClass(BaseTestCase):")
-    data.append("")
     data.append("    def test_boilerplate(self):")
     data.append("        self.login()")
     data.append("        self.example_method()")
     data.append("        self.assert_element(Page.html)")
     data.append("")
-    file_path = "%s/%s" % (dir_name_2, "boilerplate_test.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name_2, "boilerplate_test.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
     data.append("from seleniumbase import BaseCase")
+    data.append("BaseCase.main(__name__, __file__)")
     data.append("")
     data.append("")
-    data.append("class DataPage():")
-    data.append("")
+    data.append("class DataPage:")
     data.append("    def go_to_data_url(self, sb):")
-    data.append('        sb.open("data:text/html,<p>Hello!</p><input />")')
+    data.append('        sb.goto("data:text/html,<p>Hello!</p><input />")')
     data.append("")
     data.append("    def add_input_text(self, sb, text):")
     data.append('        sb.type("input", text)')
     data.append("")
     data.append("")
     data.append("class ObjTests(BaseCase):")
-    data.append("")
     data.append("    def test_data_url_page(self):")
     data.append("        DataPage().go_to_data_url(self)")
     data.append('        self.assert_text("Hello!", "p")')
     data.append('        DataPage().add_input_text(self, "Goodbye!")')
     data.append("")
-    file_path = "%s/%s" % (dir_name_2, "classic_obj_test.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name_2, "classic_obj_test.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
-    data.append("class DataPage():")
-    data.append("")
+    data.append("class DataPage:")
     data.append("    def go_to_data_url(self, sb):")
-    data.append('        sb.open("data:text/html,<p>Hello!</p><input />")')
+    data.append('        sb.goto("data:text/html,<p>Hello!</p><input />")')
     data.append("")
     data.append("    def add_input_text(self, sb, text):")
     data.append('        sb.type("input", text)')
     data.append("")
     data.append("")
-    data.append("class ObjTests():")
-    data.append("")
+    data.append("class ObjTests:")
     data.append("    def test_data_url_page(self, sb):")
     data.append("        DataPage().go_to_data_url(sb)")
     data.append('        sb.assert_text("Hello!", "p")')
     data.append('        DataPage().add_input_text(sb, "Goodbye!")')
     data.append("")
-    file_path = "%s/%s" % (dir_name_2, "sb_fixture_test.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name_2, "sb_fixture_test.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
-    dir_name_3 = dir_name_2 + "/" + "samples"
+    dir_name_3 = os.path.join(dir_name_2, "samples")
     os.mkdir(dir_name_3)
 
     data = []
     data.append("")
-    file_path = "%s/%s" % (dir_name_3, "__init__.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name_3, "__init__.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
     data.append("from seleniumbase import BaseCase")
     data.append("from .google_objects import HomePage, ResultsPage")
+    data.append('BaseCase.main(__name__, __file__, "--uc")')
     data.append("")
     data.append("")
     data.append("class GoogleTests(BaseCase):")
-    data.append("")
     data.append("    def test_google_dot_com(self):")
-    data.append("        self.open('https://google.com/ncr')")
-    data.append("        self.type(HomePage.search_box, 'github')")
-    data.append("        self.assert_element(HomePage.list_box)")
+    data.append("        if self.headless:")
+    data.append('            self.skip("Skipping test in headless mode.")')
+    data.append("        if not self.undetectable:")
+    data.append("            self.get_new_driver(undetectable=True)")
+    data.append('        self.goto("https://google.com/ncr")')
+    data.append(
+        "        self.click_if_visible('button:contains(\"Accept all\")')"
+    )
+    data.append('        self.assert_title_contains("Google")')
+    data.append("        self.sleep(0.05)")
+    data.append("        self.save_screenshot_to_logs()")
+    data.append('        self.type(HomePage.search_box, "GitHub")')
     data.append("        self.assert_element(HomePage.search_button)")
-    data.append(
-        "        self.assert_element(HomePage.feeling_lucky_button)")
+    data.append("        self.assert_element(HomePage.feeling_lucky_button)")
     data.append("        self.click(HomePage.search_button)")
+    data.append("        self.sleep(1)")
     data.append(
-        "        self.assert_text('github.com', "
-        "ResultsPage.search_results)")
-    data.append("        self.assert_element(ResultsPage.images_link)")
+        '        self.assert_text("github.com", ResultsPage.search_results)'
+    )
     data.append("")
-    file_path = "%s/%s" % (dir_name_3, "google_test.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name_3, "google_test.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
     data.append("class HomePage(object):")
     data.append("    dialog_box = '[role=\"dialog\"] div'")
-    data.append("    search_box = 'input[title=\"Search\"]'")
-    data.append("    list_box = '[role=\"listbox\"]'")
+    data.append("    search_box = '[name=\"q\"]'")
     data.append("    search_button = 'input[value=\"Google Search\"]'")
     data.append(
-        "    feeling_lucky_button = "
-        "'''input[value=\"I'm Feeling Lucky\"]'''")
+        '    feeling_lucky_button = """input[value="I\'m Feeling Lucky"]"""'
+    )
     data.append("")
     data.append("")
     data.append("class ResultsPage(object):")
-    data.append("    google_logo = 'img[alt=\"Google\"]'")
-    data.append("    images_link = 'link=Images'")
-    data.append("    search_results = 'div#center_col'")
+    data.append('    search_results = "div#center_col"')
     data.append("")
-    file_path = "%s/%s" % (dir_name_3, "google_objects.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name_3, "google_objects.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
+    data.append('""" Classic Page Object Model with BaseCase inheritance """')
+    data.append("")
     data.append("from seleniumbase import BaseCase")
+    data.append("BaseCase.main(__name__, __file__)")
     data.append("")
     data.append("")
-    data.append("class LoginPage():")
-    data.append("")
+    data.append("class LoginPage:")
     data.append("    def login_to_swag_labs(self, sb, username):")
-    data.append('        sb.open("https://www.saucedemo.com/")')
+    data.append('        sb.goto("https://www.saucedemo.com/")')
     data.append('        sb.type("#user-name", username)')
     data.append('        sb.type("#password", "secret_sauce")')
     data.append("        sb.click('input[type=\"submit\"]')")
     data.append("")
     data.append("")
     data.append("class MyTests(BaseCase):")
-    data.append("")
     data.append("    def test_swag_labs_login(self):")
     data.append(
-        '        LoginPage().login_to_swag_labs(self, "standard_user")')
+        '        LoginPage().login_to_swag_labs(self, "standard_user")'
+    )
     data.append('        self.assert_element("#inventory_container")')
-    data.append('        self.assert_text("Products", "div.product_label")')
+    data.append(
+        "        self.assert_element('div:contains(\"Sauce Labs Backpack\")')"
+    )
+    data.append('        self.js_click("a#logout_sidebar_link")')
+    data.append('        self.assert_element("div#login_button_container")')
     data.append("")
-    file_path = "%s/%s" % (dir_name_3, "swag_labs_test.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name_3, "swag_labs_test.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
     data = []
-    data.append("class LoginPage():")
+    data.append('""" Classic Page Object Model with the "sb" fixture """')
     data.append("")
+    data.append("")
+    data.append("class LoginPage:")
     data.append("    def login_to_swag_labs(self, sb, username):")
-    data.append('        sb.open("https://www.saucedemo.com/")')
+    data.append('        sb.goto("https://www.saucedemo.com/")')
     data.append('        sb.type("#user-name", username)')
     data.append('        sb.type("#password", "secret_sauce")')
     data.append("        sb.click('input[type=\"submit\"]')")
     data.append("")
     data.append("")
-    data.append("class MyTests():")
-    data.append("")
+    data.append("class MyTests:")
     data.append("    def test_swag_labs_login(self, sb):")
     data.append('        LoginPage().login_to_swag_labs(sb, "standard_user")')
-    data.append('        sb.assert_element("#inventory_container")')
-    data.append('        sb.assert_text("Products", "div.product_label")')
+    data.append('        sb.assert_element("div.inventory_list")')
+    data.append(
+        "        sb.assert_element('div:contains(\"Sauce Labs Backpack\")')"
+    )
+    data.append('        sb.js_click("a#logout_sidebar_link")')
+    data.append('        sb.assert_element("div#login_button_container")')
     data.append("")
-    file_path = "%s/%s" % (dir_name_3, "sb_swag_test.py")
-    file = codecs.open(file_path, "w+", "utf-8")
+    file_path = os.path.join(dir_name_3, "sb_swag_test.py")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
 
+    data = []
+    data.append("  %s/" % dir_name)
+    if gha:
+        data.append("  ├── .github")
+        data.append("  │   └── workflows/")
+        data.append("  │      └── python-package.yml")
+    data.append("  ├── __init__.py")
+    data.append("  ├── my_first_test.py")
+    data.append("  ├── parameterized_test.py")
+    data.append("  ├── pytest.ini")
+    data.append("  ├── requirements.txt")
+    data.append("  ├── setup.cfg")
+    data.append("  ├── test_demo_site.py")
+    data.append("  └── boilerplates/")
+    data.append("      ├── __init__.py")
+    data.append("      ├── base_test_case.py")
+    data.append("      ├── boilerplate_test.py")
+    data.append("      ├── classic_obj_test.py")
+    data.append("      ├── page_objects.py")
+    data.append("      ├── sb_fixture_test.py")
+    data.append("      └── samples/")
+    data.append("          ├── __init__.py")
+    data.append("          ├── google_objects.py")
+    data.append("          ├── google_test.py")
+    data.append("          ├── sb_swag_test.py")
+    data.append("          └── swag_labs_test.py")
+    file_path = os.path.join(dir_name, "outline.rst")
+    file = open(file_path, mode="w+", encoding="utf-8")
+    file.writelines("\r\n".join(data))
+    file.close()
+
+    subprocess.run(["sbase", "print", file_path, "-n"])
+    os.remove(file_path)
+
     success = (
-        '\n' + c1 + '* Directory "' + dir_name + '" was created '
-        'with config files and sample tests! *' + cr + '\n')
+        "\n" + c1 + '* Directory "' + dir_name + '" was created '
+        "with config files and sample tests! *" + cr + "\n"
+    )
     print(success)
 
 

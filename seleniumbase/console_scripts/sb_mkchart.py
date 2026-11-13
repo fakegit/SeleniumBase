@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Creates a new SeleniumBase chart presentation with boilerplate code.
 
@@ -23,39 +22,38 @@ Output:
     and use a "sky" theme with "slide" transition.
     The chart can be used as a basic boilerplate.
 """
-
-import codecs
 import colorama
 import os
+import subprocess
 import sys
 
 
 def invalid_run_command(msg=None):
-    exp = ("  ** mkchart **\n\n")
+    exp = "  ** mkchart **\n\n"
     exp += "  Usage:\n"
-    exp += "          seleniumbase mkchart [FILE.py] [LANG]\n"
-    exp += "          OR     sbase mkchart [FILE.py] [LANG]\n"
+    exp += "     seleniumbase mkchart [FILE.py] [LANG]\n"
+    exp += "     OR     sbase mkchart [FILE.py] [LANG]\n"
     exp += "  Example:\n"
-    exp += "          sbase mkchart new_chart.py --en\n"
+    exp += "     sbase mkchart new_chart.py --en\n"
     exp += "  Language Options:\n"
-    exp += "          --en / --English    |    --zh / --Chinese\n"
-    exp += "          --nl / --Dutch      |    --fr / --French\n"
-    exp += "          --it / --Italian    |    --ja / --Japanese\n"
-    exp += "          --ko / --Korean     |    --pt / --Portuguese\n"
-    exp += "          --ru / --Russian    |    --es / --Spanish\n"
+    exp += "     --en / --English    |    --zh / --Chinese\n"
+    exp += "     --nl / --Dutch      |    --fr / --French\n"
+    exp += "     --it / --Italian    |    --ja / --Japanese\n"
+    exp += "     --ko / --Korean     |    --pt / --Portuguese\n"
+    exp += "     --ru / --Russian    |    --es / --Spanish\n"
     exp += "  Output:\n"
-    exp += '          Creates a new SeleniumBase chart presentation.\n'
-    exp += '          If the file already exists, an error is raised.\n'
-    exp += '          By default, the slides are written in English,\n'
-    exp += '          and use a "sky" theme with "slide" transition.\n'
-    exp += '          The chart can be used as a basic boilerplate.\n'
+    exp += "     Creates a new SeleniumBase chart presentation.\n"
+    exp += "     If the file already exists, an error is raised.\n"
+    exp += "     By default, the slides are written in English,\n"
+    exp += '     and use a "sky" theme with "slide" transition.\n'
+    exp += "     The chart can be used as a basic boilerplate.\n"
     if not msg:
-        raise Exception('INVALID RUN COMMAND!\n\n%s' % exp)
+        raise Exception("INVALID RUN COMMAND!\n\n%s" % exp)
     elif msg == "help":
         print("\n%s" % exp)
         sys.exit()
     else:
-        raise Exception('INVALID RUN COMMAND!\n\n%s\n%s\n' % (exp, msg))
+        raise Exception("INVALID RUN COMMAND!\n\n%s\n%s\n" % (exp, msg))
 
 
 def main():
@@ -64,7 +62,6 @@ def main():
     c7 = ""
     cr = ""
     if "linux" not in sys.platform:
-        colorama.init(autoreset=True)
         c1 = colorama.Fore.BLUE + colorama.Back.LIGHTCYAN_EX
         c5 = colorama.Fore.RED + colorama.Back.LIGHTYELLOW_EX
         c7 = colorama.Fore.BLACK + colorama.Back.MAGENTA
@@ -77,19 +74,20 @@ def main():
 
     command_args = sys.argv[2:]
     file_name = command_args[0]
+    if file_name:
+        file_name = str(file_name)
     if file_name == "-h" or file_name == "--help":
         invalid_run_command("help")
     elif not file_name.endswith(".py"):
         error_msg = 'File name must end with ".py"!'
-    elif "*" in file_name or len(str(file_name)) < 4:
-        error_msg = 'Invalid file name!'
+    elif "*" in file_name or len(file_name) < 4:
+        error_msg = "Invalid file name!"
     elif file_name.startswith("-"):
         error_msg = 'File name cannot start with "-"!'
-    elif "/" in str(file_name) or "\\" in str(file_name):
-        error_msg = 'File must be created in the current directory!'
-    elif os.path.exists(os.getcwd() + '/' + file_name):
-        error_msg = (
-            'File "%s" already exists in this directory!' % file_name)
+    elif any(sep in file_name for sep in ("/", "\\")):
+        error_msg = "File must be created in the current directory!"
+    elif os.path.exists(os.getcwd() + "/" + file_name):
+        error_msg = 'File "%s" already exists in this directory!' % file_name
     if error_msg:
         error_msg = c5 + "ERROR: " + error_msg + cr
         invalid_run_command(error_msg)
@@ -122,22 +120,14 @@ def main():
                 language = "Spanish"
             else:
                 invalid_cmd = "\n===> INVALID OPTION: >> %s <<\n" % option
-                invalid_cmd = invalid_cmd.replace('>> ', ">>" + c5 + " ")
-                invalid_cmd = invalid_cmd.replace(' <<', " " + cr + "<<")
-                invalid_cmd = invalid_cmd.replace('>>', c7 + ">>" + cr)
-                invalid_cmd = invalid_cmd.replace('<<', c7 + "<<" + cr)
+                invalid_cmd = invalid_cmd.replace(">> ", ">>" + c5 + " ")
+                invalid_cmd = invalid_cmd.replace(" <<", " " + cr + "<<")
+                invalid_cmd = invalid_cmd.replace(">>", c7 + ">>" + cr)
+                invalid_cmd = invalid_cmd.replace("<<", c7 + "<<" + cr)
                 help_me = True
                 break
     if help_me:
         invalid_run_command(invalid_cmd)
-
-    if language != "English" and sys.version_info[0] == 2:
-        print("")
-        msg = 'Multi-language support for "sbase mkchart" '
-        msg += 'is not available on Python 2!'
-        msg = "\n" + c5 + msg + cr
-        msg += '\nPlease run in "English" mode or upgrade to Python 3!\n'
-        raise Exception(msg)
 
     dir_name = os.getcwd()
     file_path = "%s/%s" % (dir_name, file_name)
@@ -194,10 +184,11 @@ def main():
         chart_options = '"circular", "barras", "columnas", "líneas", "área"'
 
     import_line = "from seleniumbase import BaseCase"
+    main_line = "BaseCase.main(__name__, __file__)"
     parent_class = "BaseCase"
-    class_line = "class MyTestClass(BaseCase):"
     if language != "English":
         from seleniumbase.translate.master_dict import MD_F
+
         import_line = MD_F.get_import_line(language)
         parent_class = MD_F.get_lang_parent_class(language)
     class_line = "class %s(%s):" % (class_name, parent_class)
@@ -206,22 +197,22 @@ def main():
     add_slide = '"<p>Chart Demo</p>" + self.extract_chart()'
     data = []
     data.append("%s" % import_line)
+    data.append("%s" % main_line)
     data.append("")
     data.append("")
     data.append("%s" % class_line)
-    data.append("")
     data.append("    def test_chart_presentation(self):")
-    data.append('        self.create_presentation(%s)' % settings)
+    data.append("        self.create_presentation(%s)" % settings)
     data.append("")
-    data.append('        # %s => %s' % (select_option, chart_options))
-    data.append('        self.create_pie_chart(%s)' % chart_settings)
-    data.append('        self.add_data_point("%s A", 50)' % item)
-    data.append('        self.add_data_point("%s B", 40)' % item)
-    data.append('        self.add_data_point("%s C", 35)' % item)
-    data.append('        self.add_data_point("%s D", 30)' % item)
-    data.append('        self.add_data_point("%s E", 25)' % item)
-    data.append('        self.add_data_point("%s F", 20)' % item)
-    data.append('        self.add_slide(%s)' % add_slide)
+    data.append("        # %s => %s" % (select_option, chart_options))
+    data.append("        self.create_pie_chart(%s)" % chart_settings)
+    data.append('        self.add_data_point("%s A", 36)' % item)
+    data.append('        self.add_data_point("%s B", 33)' % item)
+    data.append('        self.add_data_point("%s C", 27)' % item)
+    data.append('        self.add_data_point("%s D", 21)' % item)
+    data.append('        self.add_data_point("%s E", 18)' % item)
+    data.append('        self.add_data_point("%s F", 15)' % item)
+    data.append("        self.add_slide(%s)" % add_slide)
     data.append("")
     data.append('        self.begin_presentation(filename="%s")' % html_name)
     data.append("")
@@ -232,6 +223,7 @@ def main():
     else:
         from seleniumbase.translate.master_dict import MD
         from seleniumbase.translate.master_dict import MD_L_Codes
+
         md = MD.md
         lang_codes = MD_L_Codes.lang
         nl_code = lang_codes[language]
@@ -253,19 +245,28 @@ def main():
                         # Example: self.assert_true("Name" in self.get_title())
                         line = new_line
                         continue
+            if main_line in line:
+                new_main = "%s.main(__name__, __file__)" % parent_class
+                new_line = line.replace(main_line, new_main)
+                found_swap = True
             if found_swap:
                 if new_line.endswith("  # noqa"):  # Remove flake8 skip
-                    new_line = new_line[0:-len("  # noqa")]
+                    new_line = new_line[0 : -len("  # noqa")]
                 new_data.append(new_line)
                 continue
             new_data.append(line)
     data = new_data
-    file = codecs.open(file_path, "w+", "utf-8")
+    file = open(file_path, mode="w+", encoding="utf-8")
     file.writelines("\r\n".join(data))
     file.close()
+
+    print_cmd = ["sbase", "print", file_name, "-n"]
+    subprocess.run(print_cmd)
+
     success = (
-        '\n' + c1 + '* Chart Presentation: "' + file_name + '" was created! *'
-        '' + cr + '\n')
+        "\n" + c1 + '* Chart Presentation: "' + file_name + '" was created! *'
+        "" + cr + "\n"
+    )
     print(success)
 
 

@@ -1,12 +1,11 @@
-# Japanese / 日本語 - Translations - Python 3 Only!
+# Japanese / 日本語 - Translations
 from seleniumbase import BaseCase
 from seleniumbase import MasterQA
 
 
-class セレニウムテストケース(BaseCase):  # noqa
-
+class セレニウムテストケース(BaseCase):
     def __init__(self, *args, **kwargs):
-        super(セレニウムテストケース, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._language = "Japanese"
 
     def を開く(self, *args, **kwargs):
@@ -25,6 +24,10 @@ class セレニウムテストケース(BaseCase):  # noqa
         # double_click(selector)
         return self.double_click(*args, **kwargs)
 
+    def コンテキストクリック(self, *args, **kwargs):
+        # context_click(selector)
+        return self.context_click(*args, **kwargs)
+
     def ゆっくりクリックして(self, *args, **kwargs):
         # slow_click(selector)
         return self.slow_click(*args, **kwargs)
@@ -33,9 +36,18 @@ class セレニウムテストケース(BaseCase):  # noqa
         # click_if_visible(selector, by=By.CSS_SELECTOR)
         return self.click_if_visible(*args, **kwargs)
 
+    def 存在する場合はJSクリック(self, *args, **kwargs):
+        # js_click_if_present(selector, by=By.CSS_SELECTOR)
+        return self.js_click_if_present(*args, **kwargs)
+
     def リンクテキストをクリックします(self, *args, **kwargs):
         # click_link_text(link_text)
         return self.click_link_text(*args, **kwargs)
+
+    def オフセットでクリック(self, *args, **kwargs):
+        # click_with_offset(selector, x, y, by=By.CSS_SELECTOR,
+        #                   mark=None, timeout=None, center=None)
+        return self.click_with_offset(*args, **kwargs)
 
     def テキストを更新(self, *args, **kwargs):
         # update_text(selector, text)
@@ -65,6 +77,14 @@ class セレニウムテストケース(BaseCase):  # noqa
         # assert_link_text(link_text)
         return self.assert_link_text(*args, **kwargs)
 
+    def 空ではないテキストを確認する(self, *args, **kwargs):
+        # assert_non_empty_text(selector)
+        return self.assert_non_empty_text(*args, **kwargs)
+
+    def テキが表示されていないことを確認します(self, *args, **kwargs):
+        # assert_text_not_visible(text, selector)
+        return self.assert_text_not_visible(*args, **kwargs)
+
     def 要素を確認する(self, *args, **kwargs):
         # assert_element(selector)
         return self.assert_element(*args, **kwargs)
@@ -85,9 +105,25 @@ class セレニウムテストケース(BaseCase):  # noqa
         # assert_element_absent(selector)
         return self.assert_element_absent(*args, **kwargs)
 
+    def 属性を確認する(self, *args, **kwargs):
+        # assert_attribute(selector, attribute, value)
+        return self.assert_attribute(*args, **kwargs)
+
+    def URLを確認する(self, *args, **kwargs):
+        # assert_url(url)
+        return self.assert_url(*args, **kwargs)
+
+    def URL部分文字列を確認する(self, *args, **kwargs):
+        # assert_url_contains(substring)
+        return self.assert_url_contains(*args, **kwargs)
+
     def タイトルを確認(self, *args, **kwargs):
         # assert_title(title)
         return self.assert_title(*args, **kwargs)
+
+    def タイトル部分文字列を確認する(self, *args, **kwargs):
+        # assert_title_contains(substring)
+        return self.assert_title_contains(*args, **kwargs)
 
     def タイトルを取得する(self, *args, **kwargs):
         # get_title()
@@ -133,6 +169,10 @@ class セレニウムテストケース(BaseCase):  # noqa
         # is_text_visible(text, selector="html")
         return self.is_text_visible(*args, **kwargs)
 
+    def 正確なテキストが表示されています(self, *args, **kwargs):
+        # is_exact_text_visible(text, selector="html")
+        return self.is_exact_text_visible(*args, **kwargs)
+
     def 要素は表示されますか(self, *args, **kwargs):
         # is_element_visible(selector)
         return self.is_element_visible(*args, **kwargs)
@@ -169,6 +209,14 @@ class セレニウムテストケース(BaseCase):  # noqa
         # wait_for_element_absent(selector)
         return self.wait_for_element_absent(*args, **kwargs)
 
+    def 属性を待つ(self, *args, **kwargs):
+        # wait_for_attribute(selector, attribute, value)
+        return self.wait_for_attribute(*args, **kwargs)
+
+    def ページがロードされるのを待ちます(self, *args, **kwargs):
+        # wait_for_ready_state_complete()
+        return self.wait_for_ready_state_complete(*args, **kwargs)
+
     def 眠る(self, *args, **kwargs):
         # sleep(seconds)
         return self.sleep(*args, **kwargs)
@@ -201,6 +249,18 @@ class セレニウムテストケース(BaseCase):  # noqa
         # js_type(selector, text)
         return self.js_type(*args, **kwargs)
 
+    def JQUERYクリックして(self, *args, **kwargs):
+        # jquery_click(selector)
+        return self.jquery_click(*args, **kwargs)
+
+    def JQUERYテキストを更新(self, *args, **kwargs):
+        # jquery_update_text(selector, text)
+        return self.jquery_update_text(*args, **kwargs)
+
+    def JQUERY入力(self, *args, **kwargs):
+        # jquery_type(selector, text)
+        return self.jquery_type(*args, **kwargs)
+
     def HTMLをチェック(self, *args, **kwargs):
         # inspect_html()
         return self.inspect_html(*args, **kwargs)
@@ -208,6 +268,10 @@ class セレニウムテストケース(BaseCase):  # noqa
     def スクリーンショットを保存(self, *args, **kwargs):
         # save_screenshot(name)
         return self.save_screenshot(*args, **kwargs)
+
+    def ログにスクリーンショットを保存(self, *args, **kwargs):
+        # save_screenshot_to_logs(name)
+        return self.save_screenshot_to_logs(*args, **kwargs)
 
     def ファイルを選択(self, *args, **kwargs):
         # choose_file(selector, file_path)
@@ -225,6 +289,14 @@ class セレニウムテストケース(BaseCase):  # noqa
         # activate_jquery()
         return self.activate_jquery(*args, **kwargs)
 
+    def RECORDERを読み込む(self, *args, **kwargs):
+        # activate_recorder()
+        return self.activate_recorder(*args, **kwargs)
+
+    def URLでない場合は開く(self, *args, **kwargs):
+        # open_if_not_url(url)
+        return self.open_if_not_url(*args, **kwargs)
+
     def ブロック広告(self, *args, **kwargs):
         # ad_block()
         return self.ad_block(*args, **kwargs)
@@ -241,13 +313,17 @@ class セレニウムテストケース(BaseCase):  # noqa
         # assert_no_js_errors()
         return self.assert_no_js_errors(*args, **kwargs)
 
-    def フレームに切り替え(self, *args, **kwargs):
+    def フレームに切り替えます(self, *args, **kwargs):
         # switch_to_frame(frame)
         return self.switch_to_frame(*args, **kwargs)
 
     def デフォルトのコンテンツに切り替える(self, *args, **kwargs):
         # switch_to_default_content()
         return self.switch_to_default_content(*args, **kwargs)
+
+    def 親フレームに切り替えます(self, *args, **kwargs):
+        # switch_to_parent_frame()
+        return self.switch_to_parent_frame(*args, **kwargs)
 
     def 新しいウィンドウを開く(self, *args, **kwargs):
         # open_new_window()
@@ -289,9 +365,13 @@ class セレニウムテストケース(BaseCase):  # noqa
         # scroll_to_bottom()
         return self.scroll_to_bottom(*args, **kwargs)
 
-    def 上にマウスを移動しクリック(self, *args, **kwargs):
+    def マウスオーバーしてクリック(self, *args, **kwargs):
         # hover_and_click(hover_selector, click_selector)
         return self.hover_and_click(*args, **kwargs)
+
+    def マウスオーバー(self, *args, **kwargs):
+        # hover(selector)
+        return self.hover(*args, **kwargs)
 
     def 選択されていることを(self, *args, **kwargs):
         # is_selected(selector)
@@ -440,9 +520,25 @@ class セレニウムテストケース(BaseCase):  # noqa
         #                 codec='utf-8', wrap=True, nav=False, override=False)
         return self.assert_pdf_text(*args, **kwargs)
 
+    def ファイルをダウンロード(self, *args, **kwargs):
+        # download_file(file)
+        return self.download_file(*args, **kwargs)
+
+    def ダウンロードしたファイルが存在するかどうか(self, *args, **kwargs):
+        # is_downloaded_file_present(file)
+        return self.is_downloaded_file_present(*args, **kwargs)
+
+    def ダウンロードしたファイルパスを取得する(self, *args, **kwargs):
+        # get_path_of_downloaded_file(file)
+        return self.get_path_of_downloaded_file(*args, **kwargs)
+
     def ダウンロードしたファイルを確認する(self, *args, **kwargs):
         # assert_downloaded_file(file)
         return self.assert_downloaded_file(*args, **kwargs)
+
+    def ダウンロードしたファイルを削除する(self, *args, **kwargs):
+        # delete_downloaded_file(file)
+        return self.delete_downloaded_file(*args, **kwargs)
 
     def 失敗(self, *args, **kwargs):
         # fail(msg=None)  # Inherited from "unittest"
@@ -566,7 +662,6 @@ class セレニウムテストケース(BaseCase):  # noqa
 
 
 class MasterQA_日本語(MasterQA, セレニウムテストケース):
-
     def を確認する(self, *args, **kwargs):
         # "Manual Check"
         self.DEFAULT_VALIDATION_TITLE = "手動チェック"

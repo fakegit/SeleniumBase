@@ -1,12 +1,11 @@
-# Russian / Русский - Translations - Python 3 Only!
+# Russian / Русский - Translations
 from seleniumbase import BaseCase
 from seleniumbase import MasterQA
 
 
-class ТестНаСелен(BaseCase):  # noqa
-
+class ТестНаСелен(BaseCase):
     def __init__(self, *args, **kwargs):
-        super(ТестНаСелен, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._language = "Russian"
 
     def открыть(self, *args, **kwargs):
@@ -25,6 +24,10 @@ class ТестНаСелен(BaseCase):  # noqa
         # double_click(selector)
         return self.double_click(*args, **kwargs)
 
+    def контекстный_щелчок(self, *args, **kwargs):
+        # context_click(selector)
+        return self.context_click(*args, **kwargs)
+
     def нажмите_медленно(self, *args, **kwargs):
         # slow_click(selector)
         return self.slow_click(*args, **kwargs)
@@ -33,9 +36,18 @@ class ТестНаСелен(BaseCase):  # noqa
         # click_if_visible(selector, by=By.CSS_SELECTOR)
         return self.click_if_visible(*args, **kwargs)
 
+    def JS_нажмите_если_присутствует(self, *args, **kwargs):
+        # js_click_if_present(selector, by=By.CSS_SELECTOR)
+        return self.js_click_if_present(*args, **kwargs)
+
     def нажмите_ссылку(self, *args, **kwargs):
         # click_link_text(link_text)
         return self.click_link_text(*args, **kwargs)
+
+    def нажмите_на_местоположение(self, *args, **kwargs):
+        # click_with_offset(selector, x, y, by=By.CSS_SELECTOR,
+        #                   mark=None, timeout=None, center=None)
+        return self.click_with_offset(*args, **kwargs)
 
     def обновить_текст(self, *args, **kwargs):
         # update_text(selector, text)
@@ -65,6 +77,14 @@ class ТестНаСелен(BaseCase):  # noqa
         # assert_link_text(link_text)
         return self.assert_link_text(*args, **kwargs)
 
+    def подтвердить_непустой_текст(self, *args, **kwargs):
+        # assert_non_empty_text(selector)
+        return self.assert_non_empty_text(*args, **kwargs)
+
+    def подтвердить_текст_не_виден(self, *args, **kwargs):
+        # assert_text_not_visible(text, selector)
+        return self.assert_text_not_visible(*args, **kwargs)
+
     def подтвердить_элемент(self, *args, **kwargs):
         # assert_element(selector)
         return self.assert_element(*args, **kwargs)
@@ -85,9 +105,25 @@ class ТестНаСелен(BaseCase):  # noqa
         # assert_element_absent(selector)
         return self.assert_element_absent(*args, **kwargs)
 
+    def подтвердить_атрибут(self, *args, **kwargs):
+        # assert_attribute(selector, attribute, value)
+        return self.assert_attribute(*args, **kwargs)
+
+    def подтвердить_URL(self, *args, **kwargs):
+        # assert_url(url)
+        return self.assert_url(*args, **kwargs)
+
+    def подтвердить_URL_содержит(self, *args, **kwargs):
+        # assert_url_contains(substring)
+        return self.assert_url_contains(*args, **kwargs)
+
     def подтвердить_название(self, *args, **kwargs):
         # assert_title(title)
         return self.assert_title(*args, **kwargs)
+
+    def подтвердить_название_содержит(self, *args, **kwargs):
+        # assert_title_contains(substring)
+        return self.assert_title_contains(*args, **kwargs)
 
     def получить_название(self, *args, **kwargs):
         # get_title()
@@ -133,6 +169,10 @@ class ТестНаСелен(BaseCase):  # noqa
         # is_text_visible(text, selector="html")
         return self.is_text_visible(*args, **kwargs)
 
+    def точный_текст_виден(self, *args, **kwargs):
+        # is_exact_text_visible(text, selector="html")
+        return self.is_exact_text_visible(*args, **kwargs)
+
     def элемент_виден(self, *args, **kwargs):
         # is_element_visible(selector)
         return self.is_element_visible(*args, **kwargs)
@@ -169,6 +209,14 @@ class ТестНаСелен(BaseCase):  # noqa
         # wait_for_element_absent(selector)
         return self.wait_for_element_absent(*args, **kwargs)
 
+    def ждать_атрибут(self, *args, **kwargs):
+        # wait_for_attribute(selector, attribute, value)
+        return self.wait_for_attribute(*args, **kwargs)
+
+    def ждать_загрузки_страницы(self, *args, **kwargs):
+        # wait_for_ready_state_complete()
+        return self.wait_for_ready_state_complete(*args, **kwargs)
+
     def спать(self, *args, **kwargs):
         # sleep(seconds)
         return self.sleep(*args, **kwargs)
@@ -201,6 +249,18 @@ class ТестНаСелен(BaseCase):  # noqa
         # js_type(selector, text)
         return self.js_type(*args, **kwargs)
 
+    def JQUERY_нажмите(self, *args, **kwargs):
+        # jquery_click(selector)
+        return self.jquery_click(*args, **kwargs)
+
+    def JQUERY_обновить_текст(self, *args, **kwargs):
+        # jquery_update_text(selector, text)
+        return self.jquery_update_text(*args, **kwargs)
+
+    def JQUERY_введите(self, *args, **kwargs):
+        # jquery_type(selector, text)
+        return self.jquery_type(*args, **kwargs)
+
     def проверить_HTML(self, *args, **kwargs):
         # inspect_html()
         return self.inspect_html(*args, **kwargs)
@@ -208,6 +268,10 @@ class ТестНаСелен(BaseCase):  # noqa
     def сохранить_скриншот(self, *args, **kwargs):
         # save_screenshot(name)
         return self.save_screenshot(*args, **kwargs)
+
+    def сохранить_скриншот_в_логи(self, *args, **kwargs):
+        # save_screenshot_to_logs(name)
+        return self.save_screenshot_to_logs(*args, **kwargs)
 
     def выберите_файл(self, *args, **kwargs):
         # choose_file(selector, file_path)
@@ -224,6 +288,14 @@ class ТестНаСелен(BaseCase):  # noqa
     def активировать_JQUERY(self, *args, **kwargs):
         # activate_jquery()
         return self.activate_jquery(*args, **kwargs)
+
+    def активировать_RECORDER(self, *args, **kwargs):
+        # activate_recorder()
+        return self.activate_recorder(*args, **kwargs)
+
+    def открыть_если_не_URL(self, *args, **kwargs):
+        # open_if_not_url(url)
+        return self.open_if_not_url(*args, **kwargs)
 
     def блокировать_рекламу(self, *args, **kwargs):
         # ad_block()
@@ -248,6 +320,10 @@ class ТестНаСелен(BaseCase):  # noqa
     def переключиться_на_содержимое_по_умолчанию(self, *args, **kwargs):
         # switch_to_default_content()
         return self.switch_to_default_content(*args, **kwargs)
+
+    def переключиться_на_родительский_кадр(self, *args, **kwargs):
+        # switch_to_parent_frame()
+        return self.switch_to_parent_frame(*args, **kwargs)
 
     def открыть_новое_окно(self, *args, **kwargs):
         # open_new_window()
@@ -292,6 +368,10 @@ class ТестНаСелен(BaseCase):  # noqa
     def наведите_и_нажмите(self, *args, **kwargs):
         # hover_and_click(hover_selector, click_selector)
         return self.hover_and_click(*args, **kwargs)
+
+    def наведение_мыши(self, *args, **kwargs):
+        # hover(selector)
+        return self.hover(*args, **kwargs)
 
     def выбран(self, *args, **kwargs):
         # is_selected(selector)
@@ -440,9 +520,25 @@ class ТестНаСелен(BaseCase):  # noqa
         #                 codec='utf-8', wrap=True, nav=False, override=False)
         return self.assert_pdf_text(*args, **kwargs)
 
+    def скачать_файл(self, *args, **kwargs):
+        # download_file(file)
+        return self.download_file(*args, **kwargs)
+
+    def загруженный_файл_присутствует(self, *args, **kwargs):
+        # is_downloaded_file_present(file)
+        return self.is_downloaded_file_present(*args, **kwargs)
+
+    def получить_путь_к_загруженному_файлу(self, *args, **kwargs):
+        # get_path_of_downloaded_file(file)
+        return self.get_path_of_downloaded_file(*args, **kwargs)
+
     def подтвердить_загруженный_файл(self, *args, **kwargs):
         # assert_downloaded_file(file)
         return self.assert_downloaded_file(*args, **kwargs)
+
+    def удалить_загруженный_файл(self, *args, **kwargs):
+        # delete_downloaded_file(file)
+        return self.delete_downloaded_file(*args, **kwargs)
 
     def провалить(self, *args, **kwargs):
         # fail(msg=None)  # Inherited from "unittest"
@@ -566,7 +662,6 @@ class ТестНаСелен(BaseCase):  # noqa
 
 
 class MasterQA_Русский(MasterQA, ТестНаСелен):
-
     def подтвердить(self, *args, **kwargs):
         # "Manual Check"
         self.DEFAULT_VALIDATION_TITLE = "Ручная проверка"

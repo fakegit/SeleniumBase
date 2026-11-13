@@ -1,8 +1,8 @@
 from seleniumbase import BaseCase
+BaseCase.main(__name__, __file__)
 
 
 class ChartMakerPresentation(BaseCase):
-
     def test_chart_maker_presentation(self):
         self.create_presentation(theme="sky", transition="zoom")
 
